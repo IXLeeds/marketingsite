@@ -1,0 +1,216 @@
+<? 
+	// if you see this short tag was not enabled or html is not associated to php anymore
+
+        include($_SERVER['DOCUMENT_ROOT']."/include/head.inc");
+        head('Members, Leeds Internet Exchange');
+		$currentPage = 'members';
+?>
+
+<body>
+<? include $_SERVER['DOCUMENT_ROOT']."/include/top.inc" ?>
+            <!-- Content start -->
+            <article div class="statistics-block">
+                <div class="statistics-graphics">
+                    <p class="statistics-title">STATISTICS</p>
+                    <div class="small-image-block">
+                        <div class="small-image-item">
+                            <div class="small-image">
+                                <img src="../img/statistics/total.png" />
+                            </div>
+                            <p>Total Connected</p>
+                            <div class="statistics-number">16</div>
+                        </div>
+                        <div class="small-image-item">
+                            <div class="small-image">
+                                <img src="../img/statistics/route-server.png" />
+                            </div>
+                            <p>Route Server Peers</p>
+                            <div class="statistics-number">15</div>
+                        </div>
+                        <div class="small-image-item">
+                            <div class="small-image">
+                                <img src="../img/statistics/ports.png" />
+                            </div>
+                            <p>Total No of Ports</p>
+                            <div class="statistics-number">20</div>
+                        </div>
+                        <div class="small-image-item">
+                            <div class="small-image">
+                                <img src="../img/statistics/Ipv6.png" />
+                            </div>
+                            <p>Ipv6 Peers</p>
+                            <div class="statistics-number">12</div>
+                        </div>
+                        <div class="small-image-item">
+                            <div class="small-image">
+                                <img src="../img/statistics/Ipv4.png" />
+                            </div>
+                            <p>Ipv4 Peers</p>
+                            <div class="statistics-number">16</div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <div class="responsive-table mb36px">
+                <table class="member-table">
+                    <tr>
+                        <th width="110"><span class="member-table-caption">MEMBERS</span></th>
+                        <th>ASN</th>
+                        <th>Speed</th>
+                        <th>IPv4 1.5k</th>
+                        <th>IPv4 9k</th>
+                        <th>IPv6 1.5k</th>
+                        <th>IPv6 9k</th>
+                    </tr>
+<?
+
+$db = new SQLite3('/srv/web/ixleeds.net/www/data/members.sqlite3');
+//$db = new SQLite3($_SERVER['DOCUMENT_ROOT'].'/data/members.sqlite3');
+$results = $db->query("select id,name,asn,nick,url from members where id>0 and asn != 20712 and asn != 39545 order by name");
+
+if ($results) {
+while ($row = $results->fetchArray()) {
+	$id = $row['id'] or '';
+	$name = $row['name'] or '';
+	$asn = $row['asn'] or '';
+	$nick = $row['nick'] or '';
+	$url = $row['url'] or '';
+
+        $prepared = $db->prepare("
+select
+        switch.name as switch,
+        linecard.number as linecard,
+        port.number as port,
+        presentation.name as speed
+from port
+        join presentation on presentation.id = port.presentation
+        join linecard on linecard.id = port.linecard
+        join switch on switch.id = linecard.switch
+where
+        member = :id;");
+        $prepared->bindValue(":id", $id, SQLITE3_INTEGER);
+        $r = $prepared->execute();
+
+        $row = $r->fetchArray();
+        $switch = $row['switch'] or '';
+        $linecard = $row['linecard'] or '';
+        $port = $row['port'] or '';
+        $speed = $row['speed'] or '';
+	$speed = str_replace(" ","&nbsp;",$speed);
+
+        $prepared = $db->prepare("
+select
+	security.ip as ip
+from port
+	join linecard on linecard.id = port.linecard
+	join switch on switch.id = linecard.switch
+	join security on security.linecard = linecard.id and security.port = port.number
+where
+	member = :id;");
+        $prepared->bindValue(":id", $id, SQLITE3_INTEGER);
+        $r = $prepared->execute();
+	$ip1k = '';
+	$ip9k = '';
+	$ipv61k = '';
+	$ipv69k = '';
+	while ($row = $r->fetchArray()) {
+		$ip = $row['ip'];
+		if (substr($ip,0,11) == '91.217.231.') {
+			$ip1k = $ip;
+		}
+		if (substr($ip,0,10) == '91.234.18.') {
+			$ip9k = $ip;
+		}
+		if (substr($ip,0,13) == '2001:7F8:67::') {
+			$ipv61k = strtolower($ip);
+		}
+		if (substr($ip,0,14) == '2001:7F8:67:9:') {
+			$ipv69k = strtolower($ip);
+		}
+	}
+
+?>
+                   <tr>
+                        <td><a class="member-logo" href="<?=$url?>" target="<?=$nick?>"><img src="/images/logo/member/<?=$nick?>.jpg" alt="<?=$name?> Logo" ></a></td>
+                        <td><a href="http://peeringdb.com/view.php?asn=<?=$asn?>" target="<?=$nick?>">AS<?=$asn?></a></td>
+                        <td><?=$speed?></td>
+                        <td><?=$ip1k?></td>
+                        <td><?=$ip9k?></td>
+                        <td><?=$ipv61k?></td>
+                        <td><?=$ipv69k?></td>
+                    </tr>
+<?
+	} 
+} 
+?>
+
+					<tr>
+						<td><center><a class="member-logo" href="http://www.cwc.com/" target="cw"><img src="/images/logo/member/cwc.png" alt="Cable and Wireless Logo" /></a></td>
+						<td><a href="http://peeringdb.com/view.php?asn=25310" target="cw">AS25310</a></td>
+						<td>10&nbsp;Gb</td>
+						<td>91.217.231.25</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>  
+					<tr>
+						<td><a class="member-logo" href="http://allegro.net/" target="allegro"><img src="/images/logo/member/allegro.jpg" alt="Allegro Logo" /></a></td>
+						<td><a href="http://peeringdb.com/view.php?asn=12536" target="cw">AS12536</a></td>
+						<td>10&nbsp;Gb</td>
+						<td>91.217.231.27</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>  
+					<tr>
+						<td><a class="member-logo" href="http://www.boundlesscomms.com" target="boundless"><img src="/images/logo/member/boundless.png" alt="Boundless Communications Logo" /></a></td>
+						<td><a href="http://peeringdb.com/view.php?asn=57099" target="cw">AS57099</a></td>
+						<td>10&nbsp;Gb</td>
+						<td>91.217.231.28</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+                </table>
+            </div>
+            <div class="ipv6">
+                <p class="ipv6-title">Internet protocol version 6</p>
+                <div class="left-col">
+                    <p>MTU size</p>
+                    <span class="white-btn block-button">1500 bytes</span>
+                    <span class="white-btn block-button">9000 bytes</span>
+                </div>
+                <div class="right-col">
+                    <p>&nbsp;&nbsp;&nbsp;IP Address Block</p>
+                    <span class="white-btn block-button">2001:7f8:67::/64</span>
+                    <span class="white-btn block-button">2001:7f8:67:9::/64</span>
+                </div>
+            </div>
+            <div class="ipv4">
+                <p class="ipv4-title">Internet protocol version 4</p>
+                <div class="left-col">
+                    <p>MTU size</p>
+                    <span class="white-btn block-button">1500 bytes</span>
+                    <span class="white-btn block-button">9000 bytes</span>
+                </div>
+                <div class="right-col">
+                    <p>&nbsp;&nbsp;&nbsp;IP Address Block</p>
+                    <span class="white-btn block-button">91.217.231.0/24</span>
+                    <span class="white-btn block-button">91.234.18.0/24</span>
+                </div>
+            </div>
+
+            <h3 class="spacer">Want to be next? <a href="/content/join.html" alt="join our member pannel by clicking here">Join us</a>
+            </h3>
+            <br/>
+
+            <div class="clear"></div>
+
+            <!-- Content end -->
+
+            <!-- Footer start -->
+				<? include $_SERVER['DOCUMENT_ROOT']."/include/footer.inc" ?>
+            <!-- Footer end -->
+        </div>
+	</body>
+</html>	

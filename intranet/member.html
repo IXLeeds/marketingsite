@@ -1,0 +1,180 @@
+<? 
+        include($_SERVER['DOCUMENT_ROOT']."/include/head.inc");
+        head('IXLeeds 1, Leeds Internet Exchange');
+?>
+
+<body>
+<? include $_SERVER['DOCUMENT_ROOT']."/include/top.inc" ?>
+<? include $_SERVER['DOCUMENT_ROOT']."/include/menu.inc" ?>
+
+<?PHP
+	$member_id= $_GET["id"];
+
+	$db = new SQLite3("/srv/web/ixleeds.net/www/data/members.sqlite3");
+	$prepared = $db->prepare("select name,id,asn,url from members where id=:id");
+	$prepared->bindValue(":id", $member_id, SQLITE3_INTEGER);
+	$results = $prepared->execute();
+
+	$row = $results->fetchArray();
+	$name = $row['name'] or '';
+	$id = $row['id'] or '';
+	$asn = $row['asn'] or '';
+	$url = $row['url'] or '';
+
+
+	$prepared = $db->prepare("
+select 
+	switch.name as switch,
+	linecard.number as linecard,
+	port.number as port,
+	presentation.name as speed
+from port
+	join presentation on presentation.id = port.presentation
+	join linecard on linecard.id = port.linecard
+	join switch on switch.id = linecard.switch
+where
+	member = :id;");
+	$prepared->bindValue(":id", $member_id, SQLITE3_INTEGER);
+	$results = $prepared->execute();
+
+	$row = $results->fetchArray();
+	$switch = $row['switch'] or '';
+	$linecard = $row['linecard'] or '';
+	$port = $row['port'] or '';
+	$speed = $row['speed'] or '';
+
+	$prepared = $db->prepare("select street,city,county,postcode,country from address where member=:id");
+	$prepared->bindValue(":id", $member_id, SQLITE3_INTEGER);
+	$results = $prepared->execute();
+
+	$row = $results->fetchArray();
+	$street = $row['street'] or '';
+	$city = $row['city'] or '';
+	$county = $row['county'] or '';
+	$postcode = $row['postcode'] or '';
+	$country = $row['country'] or '';
+?>
+
+<style type="text/css">
+	.indented {
+		margin-left: 20px;
+	}
+	.contact {
+		font-family: Arial;
+		background-color: #f3f3f3;
+		border: solid 1px #a1a1a1;
+		padding: 10px;
+		width: 600px;
+	}
+
+	.contact label {
+		display: block;
+		width: 100px;
+		float: left;
+		margin-bottom: 10px;
+		text-align: right;
+		padding-right: 20px;
+	}
+
+	.contact input {
+		display: block;
+		width: 430px;
+		float: left;
+		margin-bottom: 10px;
+	}
+
+	.contact textarea {
+		display: block;
+		width: 430px;
+		height: 60px;
+		float: left;
+		margin-bottom: 10px;
+		text-align: left;
+		padding-right: 20px;
+	}
+
+	.contact #submit {
+		display: block;
+		width: 50px;
+		margin-bottom: 10px;
+	}
+
+	br {
+		clear: left;
+	}
+</style>
+
+<br/>
+<br/>
+
+<div class="indented">
+	<div class="contact">
+		<label>Member</label>
+		<select name="member" onchange='this.form.submit()'>
+			<option value="<?=$id?>"><?=$name?></option>
+		</select><br/>
+
+		<label>Connection</label>
+		<input id="switch" style="width:100px;" value="<?=$switch?>">
+		<input id="linecard" style="width:25px;" value="<?=$linecard?>">
+		<input id="port" style="width:25px;" value="<?=$port?>">
+		<input id="speed" style="width:50px;" value="<?=$speed?>">
+		<br/>
+
+		<label>Address</label>
+		<textarea id="street" name="street"><?=str_replace('\n',"\n",$street)?></textarea><br/>
+
+		<label>City</label>
+		<input id="city" name="city" value="<?=$city?>"><br/>
+
+		<label>County</label>
+		<input id="county" name="county" value="<?=$county?>"><br/>
+
+		<label>Postcode</label>
+		<input id="postcode" name="postcode" value="<?=$postcode?>"><br/>
+
+		<label>Country</label>
+		<input id="country" name="country" value="<?=$country?>"><br/>
+
+		<br/>
+
+<?
+
+	$prepared = $db->prepare("
+
+select
+	category.name as category,
+	contact.priority as priority,
+	identity.name as name,
+	contact.identity as identity
+from contact
+	join category on category.id = contact.category
+	join identity on identity.id = contact.identity
+where
+	contact.member = :id
+order by
+	contact.priority;
+
+	");
+	$prepared->bindValue(":id", $member_id, SQLITE3_INTEGER);
+	$results = $prepared->execute();
+
+	while ($row = $results->fetchArray()) {
+		$category = $row['category'] or '';
+		$priority = $row['priority'] or '';
+		$name = $row['name'] or '';
+		$identity= $row['identity'] or '';
+?>
+	<a href="/intranet/contact?id=<?=$identity?>"><label><?=$category?></label></a>
+	<input id="<?=$category?>" name="<?=$category?>" value="<?=$name?>"><br/>
+<?
+	}
+
+?>
+	<a href="/intranet/members.html"><label>Back</label></a>	
+	<br/>
+	</div>
+</div>
+
+
+<html>

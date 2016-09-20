@@ -1,0 +1,173 @@
+<html>
+<? 
+        include($_SERVER['DOCUMENT_ROOT']."/include/head.inc");
+        head('IXLeeds 4, Leeds Internet Exchange');
+?>
+
+<body>
+<? include $_SERVER['DOCUMENT_ROOT']."/include/top.inc" ?>
+<? include $_SERVER['DOCUMENT_ROOT']."/include/menu.inc" ?>
+
+<?PHP
+
+	$errors = array();
+	$success = NULL;
+	$duplicate = NULL;
+	$dberror = NULL;
+
+	$first_name = (array_key_exists('first_name', $_POST)) ? str_replace("\n", " ", trim($_POST['first_name'])) : NULL;
+	$surname = (array_key_exists('surname', $_POST)) ? str_replace("\n", " ", trim($_POST['surname'])) : NULL;
+	$email = (array_key_exists('email', $_POST)) ? str_replace("\n", " ", trim($_POST['email'])) : NULL;
+	$organisation = (array_key_exists('organisation', $_POST)) ? trim($_POST['organisation']) : NULL;
+	$diet = (array_key_exists('diet', $_POST)) ? trim($_POST['diet']) : NULL;
+
+	$email = filter_var($email, FILTER_VALIDATE_EMAIL);
+
+	if ($first_name and $surname and $email and $organisation) {
+		$db = new SQLite3('/srv/web/ixleeds.net/www/data/ixleeds4.sqlite3');
+
+		if ($db) {
+			$safe_name = SQLite3::escapeString($first_name);
+			$safe_surname = SQLite3::escapeString($surname);
+			$safe_email = SQLite3::escapeString($email);
+			$safe_org = SQLite3::escapeString($organisation);
+			$safe_diet = $diet ? SQLite3::escapeString($diet) : "";
+
+
+			$q = $db->query("insert into signups (name, surname, email, organisation, diet) select data.* from (select '$safe_name', '$safe_surname', '$safe_email' email, '$safe_org', '$safe_diet') as data left join signups as existing on existing.email = data.email where existing.email is null and data.email is not null");
+
+			if ($q) {
+				$results = $db->changes();
+				if ($results) {
+					$success = true;
+				} else {
+					$duplicate = true;
+				}
+			} else {
+				$dberror = true;
+			}
+		} else {
+			$dberror = true;
+		}
+	} else {
+		if ($_POST) {
+			if (!$first_name) $errors['first_name'] = true;
+			if (!$surname) $errors['surname'] = true;
+			if (!$email) $errors['email'] = true;
+			if (!$organisation) $errors['organisation'] = true;
+		}
+	}
+
+	if ($success) {
+		$subject = "IXLeeds 4";
+		$message = "Thank you for registering for IXLeeds 4. If you have any questions about the event or your registration please contact events@ixleeds.net";
+		$headers = "From: <events@ixleeds.net>\r\nTo: $first_name $surname <$email>";
+
+		mail($email, $subject, $message, $headers);
+
+
+		$subject = "New Registration";
+		$message = "A new person registered for IXLeeds4.\r\n\r\n$first_name $surname from $organisation is booked";
+		if ($diet) {
+			$message .= "\r\nDietary requirements are:\r\n\r\n$diet";
+		}
+
+		$headers = "From: <events@ixleeds.net>\r\nTo: <events@ixleeds.net>";
+
+		mail('events@ixleeds.net', $subject, $message, $headers);
+
+	}
+?>
+
+<table border="0" cellspacing="10" cellpadding="0"><tr>
+                       
+                        <td class="links" align="center">
+                        <a href="/event/ixleeds4/index.html">IXLeeds 4</a>
+                </td>
+                        <td class="links" align="center">
+                        <a href="/event/ixleeds4/venue.html">Venue details</a>
+                </td>
+                        <td class="links" align="center">
+                        <a href="/event/ixleeds4/attendees.html">Attendee List</a>
+                </td>
+        </tr>           
+</table>  
+
+	<? if ($success) { ?>
+		<h2>Thank You</h2>
+
+		<p>Your request was registered.</p>
+		<p>A confirmation mail was sent to your email address (<?=$email?>)</p>
+
+		<p><?=$first_name?> <?=$surname?> is registered to attend IXLeeds 4</p>
+
+		<p>on behalf of <?=$organisation?></p>
+
+
+		<? if ($diet) { ?>
+			<p>Your dietary requirements have been noted</p>
+		<? } ?>
+
+	<? } elseif ($duplicate) { ?>
+		<h2>Duplicate data</h2>
+
+		<p>The email address <?=$email?> has already been used during event registration</p>
+
+		<p><a href="">Try again</a></p>
+       
+	<? } elseif ($dberror) { ?>
+		<h2>Database error</h2>
+
+		<p>We were unable to process your request. Please contact us on address@domain</p>
+
+		<p><a href="">Try again</a></p>
+       
+	<? } else { ?>
+		<div class="page">IXLeeds 4 - Online Registration</div>
+		<p><b>Complete the form below to register for IXLeeds 4</b></p>
+		<table>
+			<form method='POST' action=''>
+				<tr>
+					<td>First Name</td>
+					<td><input type='text' name='first_name' value='<?=$first_name?>'/></td>
+					<?if (array_key_exists('first_name', $errors)) { ?>
+						<td class='error'>This is a required field</td>
+					<? } ?>
+				</tr>
+				<tr>
+					<td>Surname</td>
+					<td><input type='text' name='surname' value='<?=$surname?>'/></td>
+					<?if (array_key_exists('surname', $errors)) { ?>
+						<td class='error'>This is a required field</td>
+					<? } ?>
+				</tr>
+				<tr>
+					<td>Email</td>
+					<td><input type='text' name='email' value='<?=$email?>'/></td>
+					<?if (array_key_exists('email', $errors)) { ?>
+						<td class='error'>This is a required field</td>
+					<? } ?>
+				</tr>
+				<tr>
+					<td>Organisation</td>
+					<td><input type='text' name='organisation' value='<?=$organisation?>'/></td>
+					<?if (array_key_exists('organisation', $errors)) { ?>
+						<td class='error'>This is a required field</td>
+					<? } ?>
+				</tr>
+				<tr>
+					<td>Dietary Requirements</td>
+					<td colspan='3'><textarea cols='40' rows='3' name='diet'><?=$diet?></textarea></td>
+				</tr>
+
+				<tr>
+					<td/>
+					<td><input type='submit' value='submit'/></td>
+				</tr>
+			</form>
+		</table>
+	<? } ?>
+
+	</div>
+	</body>
+</html>

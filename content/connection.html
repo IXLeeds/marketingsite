@@ -1,0 +1,302 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<!-- Date: 2011-12-13 -->
+	<meta charset="utf-8">
+	<title>Connection Policy</title>
+	<meta name="author" content="Thomas Mangin">
+	<style type="text/css">
+	body {
+		margin: 10px;
+		padding: 0px;
+		background: #FFFFFF ;
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: 14px;
+		color: #3C3D3F;
+		width: 768px;
+	}
+	section {
+		padding-top: 5px;
+	}
+	h1 { 
+		font-family: Arial, Helvetica, sans-serif;
+		display: block; 
+		text-align: center;
+		font-weight: bold;
+		text-transform: uppercase;
+	}
+	section {
+	}
+	section h2 {
+		padding-bottom: 5px;
+		font-weight: normal;
+		color: #443099;
+	}
+	section p {
+	}
+	ul, ol {
+		margin-top: 0;
+		line-height: 130%;
+	}
+	</style>
+	<!-- <time datetime="2011-12-13" pubdate>Tuesday 13, 2011</time> -->
+</head>
+<body>
+<h1>
+Connection Policy
+</h1>
+
+<section>
+<p>
+The requirements mandated in this connection policy apply to every member of IXLeeds, as mandated by our Articles of Association (section 22).
+</p>
+<p>
+IXLeeds is a mutual organisation working for the benefit of its members. As such, members must ensure that their use of IXLeeds is not detrimental to other members.
+</p>
+<p>
+Any members adversely affecting the service IXLeeds provides to the rest of the membership will be in breach of this Connection Policy.
+</p>
+</section>
+
+<section>
+<h2>
+Organisational Requirements
+</h2>
+
+<p>
+Members must have an Autonomous System (AS) Number registered with RIPE or other appropriate Regional Internet Registry (RIR).
+</p>
+
+<p>
+Members are required to :
+<ul>
+ <li/>be a recognised legal entity or incorporated association.
+ <li/>only carry legal activity under English law through IXLeeds.
+ <li/>keep any correspondence from IXLeeds confidential.
+ <li/>not publish information disclosed on IXLeeds' mailing lists without authorisation.
+</ul>
+</p>
+
+<p>
+Members will provide IXLeeds with any contact information required to allow the organisation to manage its services, including:
+<ul>
+ <li/>an email and postal address where administrative requests can be made (i.e. notification of changes).
+ <li/>an email and postal address where financial requests can be made (i.e. invoice issues).
+ <li/>an email and postal address where commercial requests can be sent (i.e. potential leads).
+ <li/>an email address other members should use for peering requests at IXLeeds.
+ <li/>an email address where technical problems can be resolved (to be used by IXLeeds to communicate technical issues).
+ <li/>at least one phone number available 24 hours a day, 7 days a week where emergency issues can be escalated.
+ <li/>optionally an email and postal address where commercial requests can be sent (i.e. potential leads).
+</ul>
+</p>
+
+<p>
+Traffic exchanged between two individual members is confidential, and subject to protection by the UK Data Protection Act 1998 (or any law superseding it). Members must not install 'sniffers' or similar devices in an attempt to monitor traffic. Any attempt to monitor traffic passing through IXLeeds will result in an immediate termination of the member's connection and expose the member to legal prosecution.
+</p>
+
+<p>
+Members do not have to reply to peering requests sent to their organisation but must reply should IXLeeds want to verify the address is being monitored.
+</p>
+</section>
+
+<section>
+<h2>
+Options
+</h2>
+<p>
+Members will be offered to join one, or multiple peering LAN(s), including :
+<ul>
+ <li/>an IPv4/IPv6 unicast peering LAN with an MTU of 1500 bytes.
+ <li/>an IPv4 multicast peering LAN with an MTU of 1500 bytes.
+ <li/>an IPv4/IPv6 unicast peering LAN with an MTU of 9000 bytes.
+</ul>
+</p>
+
+<p>
+When connecting with a tagged port, members must choose between having either:
+<ul>
+ <li/>All VLANs 802.1q tagged.
+ <li/>One VLAN (our IPv4/IPv6 1500 bytes MTU LAN) as untagged VLAN, other VLANs 802.1q tagged.
+</ul>
+</p>
+
+<p>
+IXLeeds will not renumber any of its VLANs should a conflict of VLAN occur with a member. It is up to each member to make sure that the VLAN is available for them to use or that a VLAN ID translation can be performed by their equipment.
+</p>
+</section>
+
+<section>
+<h2>
+Hardware Requirements
+</h2>
+
+<p>
+Members must not in any way interfere with equipment and/or cabling owned by other members and installed at IXLeeds without the explicit permission of the member who owns the equipment.
+</p>
+<p>
+Members will not have physical access to any equipment located at IXLeeds, including their own, without the prior agreement of IXLeeds.
+</p>
+</section>
+
+<section>
+<h2>
+L1 Requirements
+</h2>
+
+<p>Members are required to connect using RJ45, or fiber connection as will be requested by IXLeeds during the setup process.
+</p>
+<p>Telecommunications equipment, eg: an NTU, may be housed in IXLeeds colocation with the prior agreement of IXLeeds. Any such equipment and/or cabling installed in IXLeeds' colocation must be clearly labelled as belonging to that Member. Cable labels must include the location where the cable ends.
+</p>
+<p>Cabling to IXLeeds racks will only be run by contractors approved by IXLeeds and always in accordance with the guidelines set by IXLeeds.
+</p>
+<p>IXLeeds requires its members to advise the organisation of any devices between the IXLeeds switch(es) and the routers terminating the BGP session on the LAN. We expect members to inform us of any switch(es), media converter or third party providers used when connecting to LAN.
+</p>
+
+</section>
+
+<section>
+<h2>
+L2 Requirements
+</h2>
+
+<p>
+Members must ensure their equipment is configured in such a way that a frame received from an IXLeeds port is never forwarded back to the exchange.
+</p>
+
+<p>
+Only ethernet frames are allowed to be forwarded towards IXLeeds switch(es).
+<ul>
+ <li/>All frames sent must have the same source MAC address.
+ <li/>Members equipment must respond to ARP requests for one MAC address only. IXLeeds will filter traffic from unregistered MAC addresses.
+ <li/>No equipment connected to any Peering LAN is allowed to proxy-arp.
+</ul>
+</p>
+
+<p>
+A member interface delivered over a link-aggregated port shall be treated as a single port.
+</p>
+
+<p>
+In order to prevent any issues, no spanning-tree frames including Bridge Protocol Data Units (BPDU) should ever be sent to IXLeeds.
+</p>
+
+<p>
+Equipment connected to the LAN and trunking must be capable of containing traffic sent to the VLANs the member is participating in.
+</p>
+
+<p>
+Any equipment unable to contain traffic within VLAN 1 and VLAN in the range 1002-1005 does not fulfil the requirement set out in this Connection Policy.
+</p>
+
+<p>
+Member ports can be configured in access or trunk mode.
+<ul>
+ <li/>single VLAN - untagged (default configuration)
+ <li/>multi VLAN - tagged (on request)
+</ul>
+</p>
+
+<p>
+The default VLAN for IPv4/IPv6 peering is 4.
+</p>
+
+<p>
+The following ethertype should be used when sending frames to IXLeeds:
+<ul>
+ <li/>ARP  : 0x0806
+ <li/>IPv4 : 0x0800
+ <li/>IPv6 : 0x86dd	
+</ul>
+</p>
+
+<p>
+All frames forwarded to IXLeeds IPv4/IPv6 unicast peering LAN(s) must have a unicast destination MAC, except for:
+<ul>
+ <li/>broadcast ARP packets
+ <li/>multicast IPv6 Neighbour Discovery packets
+</ul>
+</p>
+
+<p>
+The multicast LAN(s) is for carrying multicast traffic only. Unicast frames are allowed when
+required for the establishment of BGP sessions between members.
+</p>
+
+
+<p>
+Devices connected to a Peering LAN must have their L3 interface configured to send, and be able to receive, the exact MTU size set for that LAN (no more, no less).
+</p>
+
+<p>
+We recommend that members willing to join the 9000 bytes MTU read:<br/>
+http://www.ietf.org/id/draft-mlevy-ixp-jumboframes-00.txt (or updated versions).
+</p>
+</section>
+
+<section>
+<h2>
+L3 Requirements
+</h2>
+
+<p>
+Members must use the IP address and netmask per Peering VLAN provided by IXLeeds and no others.
+</p>
+<p>
+This IP address must be used to establish a BGP (version 4) session with IXLeeds 'route collector'.
+</p>
+<p>
+The only L3 routing protocol allowed on any Peering LAN is BGP (as defined by RFC 4271 and later).
+</p>
+<p>
+Each member's physical port must peer with the route collector on at least one of the public peering VLANs.
+</p>
+
+<p>
+All routes exchanged on the LAN(s) must be done using BGP (version 4), for the multicast VLAN PIM-SM and MSDP may also be run.
+</p>
+<p>
+AS Numbers used on the peering LAN must not be from ranges reserved for private use, unless the router using this AS Number is not announcing any routes.
+</p>
+
+<p>
+IP space used to number the LAN must not be advertised to other networks without written permission from IXLeeds.
+</p>
+
+<p>
+All routes advertised across the Peering LAN(s) by members must point to the router advertising them unless otherwise agreed in writing by IXLeeds and the members involved.
+</p>
+
+<p>
+Members may use more than one AS Number for their IXLeeds peering provided that each AS Number shares the same NOC and peering contact details.
+</p>
+
+<p>
+Traffic shall not be routinely exchanged between two member interfaces connected to Peering LAN(s) and owned by the same member, unless otherwise agreed by IXLeeds.
+</p>
+
+<p>
+Traffic shall be forwarded to a member's equipment only after permission has been given by the receiving member, either by advertising a route via BGP, or in writing.
+</p>
+</section>
+
+<section>
+<h2>
+Definitions
+</h2>
+
+<ul>
+<li/>'peering LAN' means Layer 2 domains to which members can connect their equipment in order to establish an ethernet connection and exchange ethernet frames.
+<li/>'route collector' is equipment run by IXLeeds to which every member will configure a BGP session and send any routes using BGP.
+<li/>'frame' - as defined by IETF RFC 1042)
+<li/>'RJ45' - as defined by ISO-8877
+<li/>'proxy-arp' - as defined by RFC 1027
+<li/>'spanning-tree' - as defined by IEEE 802.1D
+<li/>'VLAN' - as defined by IEEE 802.1Q
+<li/>'trunk', 'trunking' - as defined by IEEE 802.1Q
+<li/>'access' - as defined by IEEE 802.1Q
+<li/>'MTU' - as defined by RFC 791
+</ul>
+
+</section>
+</body>
+</html>

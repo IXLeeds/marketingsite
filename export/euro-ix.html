@@ -1,0 +1,74 @@
+<?
+
+$db = new SQLite3('/srv/web/ixleeds.net/www/data/members.sqlite3');
+$results = $db->query("select id,name,asn,nick,url from members where id>0 order by name");
+
+if ($results) {
+while ($row = $results->fetchArray()) {
+	$id = $row['id'] or '';
+	$name = $row['name'] or '';
+	$asn = $row['asn'] or '';
+	$nick = $row['nick'] or '';
+	$url = $row['url'] or '';
+
+        $prepared = $db->prepare("
+select
+        switch.name as switch,
+        linecard.number as linecard,
+        port.number as port,
+        presentation.name as speed
+from port
+        join presentation on presentation.id = port.presentation
+        join linecard on linecard.id = port.linecard
+        join switch on switch.id = linecard.switch
+where
+        member = :id;");
+        $prepared->bindValue(":id", $id, SQLITE3_INTEGER);
+        $r = $prepared->execute();
+
+        $row = $r->fetchArray();
+        $switch = $row['switch'] or '';
+        $linecard = $row['linecard'] or '';
+        $port = $row['port'] or '';
+        $speed = $row['speed'] or '';
+
+        $prepared = $db->prepare("
+select
+	security.ip as ip
+from port
+	join linecard on linecard.id = port.linecard
+	join switch on switch.id = linecard.switch
+	join security on security.linecard = linecard.id and security.port = port.number
+where
+	member = :id;");
+        $prepared->bindValue(":id", $id, SQLITE3_INTEGER);
+        $r = $prepared->execute();
+	$ip1k = '';
+	$ip9k = '';
+	$ipv6 = '';
+	while ($row = $r->fetchArray()) {
+		$ip = $row['ip'];
+		if (substr($ip,0,11) == '91.217.231.') {
+			$ip1k = $ip;
+		}
+		if (substr($ip,0,10) == '91.234.18.') {
+			$ip9k = $ip;
+		}
+		if (substr($ip,0,13) == '2001:7F8:67::') {
+			$ipv6 = $ip;
+		}
+	}
+	if ($ipv6) {
+		$connected6 = "yes";
+	}
+	else {
+		$connected6 = "no";
+	}
+
+	print "$name;$asn;$url;$connected6\n";
+}
+
+print "Digital City Region;43539;http://www.digitalregionbroadband.co.uk/;no\n";
+
+}
+?>

@@ -1,0 +1,77 @@
+<html>
+<? 
+        include($_SERVER['DOCUMENT_ROOT']."/include/head.inc");
+        head('IXLeeds 1, Leeds Internet Exchange');
+?>
+
+<body>
+<? include $_SERVER['DOCUMENT_ROOT']."/include/top.inc" ?>
+<? include $_SERVER['DOCUMENT_ROOT']."/include/menu.inc" ?>
+
+<?PHP
+	$db = new SQLite3('/srv/web/ixleeds.net/www/data/members.sqlite3');
+	$results = $db->query("select name,id,asn from members order by nick");
+?>
+
+<style type="text/css">
+	.indented {
+		margin-left: 280px;
+	}
+	.contact {
+		font-family: Arial;
+		background-color: #f3f3f3;
+		border: solid 1px #a1a1a1;
+		padding: 10px;
+		width: 250px;
+	}
+
+	.contact label {
+		display: block;
+		width: 70px;
+		float: left;
+		margin-left: 10px;
+		margin-bottom: 10px;
+		padding-right: 20px;
+	}
+
+	.contact input {
+		display: block;
+		width: 150px;
+		margin-bottom: 10px;
+	}
+
+	.contact #submit {
+		width: 200px;
+		margin-bottom: 10px;
+		margin-left: 100px;
+		width: 110px;
+	}
+
+	br {
+		clear: left;
+	}
+</style>
+
+<br/>
+<br/>
+
+<form name="members" action="/intranet/member.html" method="get">
+	<div class="indented">
+		<div class="contact">
+			<label>Member</label>
+			<select name="id" onchange='this.form.submit()'>
+<? if ($results) {
+while ($row = $results->fetchArray()) {
+	$name = $row['name'] or '';
+	$id = $row['id'] or '';
+	$asn = $row['asn'] or '';
+?>
+				<option value="<?=$id?>"><?=$name?></option>
+
+<? } } ?>
+			</select>
+			<br/>
+			<input id="submit" type='submit' value='submit'/>
+		</div>
+	</div>
+</form>

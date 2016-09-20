@@ -1,0 +1,117 @@
+<? 
+	// if you see this short tag was not enabled or html is not associated to php anymore
+
+        include($_SERVER['DOCUMENT_ROOT']."/include/head.inc");
+        head('IXLeeds 2, Leeds Internet Exchange');
+		$currentPage = 'events';
+?>
+
+<body>
+<? include $_SERVER['DOCUMENT_ROOT']."/include/top.inc" ?>
+
+
+            <!-- Content start -->
+
+
+<?PHP
+
+	$errors = array();
+	$goto = NULL;
+	$success = NULL;
+
+
+
+	$db = new SQLite3('/srv/web/ixleeds.net/www/data/ixleeds2.sqlite3');
+	//$db = new SQLite3($_SERVER['DOCUMENT_ROOT'].'/data/ixleeds2.sqlite3');
+
+	$results = $db->query("select name, surname, organisation from signups order by organisation");
+
+
+
+?>
+            <!-- Content start -->
+            <article class="event-block">
+
+                <div class="content-block events-block single-event">
+                    <div class="event-block-image">
+                        <img src="/img/events/ixleeds2.jpg" title="IXLeeds 2" alt="IXLeeds 2" />
+                    </div>
+                    <div class="article-details article-details-left">
+                        <!-- <a href="/event/ixleeds2/attendees.html" title="GUESTS" class="icon-block"><span class="attendees"><span class="icon-image"></span></span>GUESTS</a> -->
+                        <a title="GUESTS" class="icon-block"><span class="attendees"><span class="icon-image"></span></span>GUESTS</a>
+                    </div>
+                    <div class="event-block-description">
+                        <a class="back" href="/event/index.html" title="Back to the main Events page">Back to Events</a>
+                        <h2>
+                            <a href="/event/ixleeds2/index.html" title="IXLeeds 2">IXLeeds <span class="red-font">2</span></a>
+                        </h2>
+                        <br/>
+                        <br/>
+						<p><b>IXLeeds 2 will take place at the Carriageworks, Leeds on 12th September 2012.</b></p>
+
+						<p>Information on this website may not be used for non-IXLeeds purposes without the written prior permission of IXLeeds</p>
+						<p>List of attendees already registered:</p>						
+                        <br/>
+                        <br/>
+						<div class="responsive-table">
+							<div class="col-row" style="min-width: 550px;">
+								<div class="col2">
+									<p class="caption">Name</p>
+								</div>
+								<div class="col2">
+									<p class="caption">Organisation</p>
+								</div>
+							</div>
+							<? if ($results) {
+								while ($row = $results->fetchArray()) {
+									$name = $row['name'] or '';
+									$surname = $row['surname'] or '';
+									$organisation = $row['organisation'] or '';
+
+							?>
+								<div class="col-row">
+									<div class="col2">
+										<p><?=$name?> <?=$surname?></p>
+									</div>
+									<div class="col2">
+										<p><?=$organisation?></p>
+									</div>
+								</div>
+							<?	}
+							} ?>
+		
+                        </div>
+                        <div class="article-details">
+                            <a href="/event/ixleeds2/index.html" title="DETAILS" class="icon-block"><span class="details"><span class="icon-image"></span></span>DETAILS</a>
+                            <a href="/event/ixleeds2/files.html" title="FILES" class="icon-block"><span class="files"><span class="icon-image"></span></span>FILES</a>
+                            <a title="GUESTS" class="icon-block active-icon"><span class="attendees"><span class="icon-image"></span></span>GUESTS</a>
+                            <a href="/event/ixleeds2/sponsors.html" title="SPONSORS" class="icon-block"><span class="sponsor"><span class="icon-image"></span></span>SPONSORS</a>
+                            <a href="/event/ixleeds2/programme.html" title="AGENDA" class="icon-block"><span class="agenda"><span class="icon-image"></span></span>AGENDA</a>
+                            <a href="/event/ixleeds2/venue.html" title="VENUE" class="icon-block"><span class="venue"><span class="icon-image"></span></span>VENUE</a>
+                            <a href="/event/ixleeds2/register.html" title="REGISTER" class="icon-block"><span class="register"><span class="icon-image"></span></span>REGISTER</a>
+                        </div>
+                    </div>
+                </div>
+                
+            </article>
+
+            <article class="member-block member-block2">
+                <div class="member-content">
+                    <p class="member-title">Our SPONSORS</p>
+                    <div class="member-images">
+                        <? include $_SERVER['DOCUMENT_ROOT']."/include/sponsors.inc" ?>
+                    </div>
+                </div>
+            </article>
+
+           
+            <div class="clear"></div>
+
+            <!-- Content end -->
+
+            <!-- Footer start -->
+				<? include $_SERVER['DOCUMENT_ROOT']."/include/footer.inc" ?>
+            <!-- Footer end -->
+        </div>
+	</body>
+</html>	

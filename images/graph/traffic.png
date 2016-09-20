@@ -1,0 +1,5 @@
+<?php
+header('Content-Type: image/png');
+echo file_get_contents('http://ix2.ixleeds.net/ixleeds-wo5u4tjklw.png');
+?>
+

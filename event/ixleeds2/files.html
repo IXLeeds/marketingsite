@@ -1,0 +1,109 @@
+<? 
+	// if you see this short tag was not enabled or html is not associated to php anymore
+
+        include($_SERVER['DOCUMENT_ROOT']."/include/head.inc");
+        head('IXLeeds 1, Leeds Internet Exchange');
+		$currentPage = 'events';
+?>
+
+<body>
+<? include $_SERVER['DOCUMENT_ROOT']."/include/top.inc" ?>
+
+            <!-- Content start -->
+            <article class="event-block">
+
+                <div class="content-block events-block single-event">
+                    <div class="event-block-image">
+                        <img src="/img/events/ixleeds2.jpg" title="IXLeeds 2" alt="IXLeeds 2" />
+                    </div>
+                    <div class="article-details article-details-left">
+						<!-- <a href="/event/ixleeds2/files.html" title="FILES" class="icon-block"><span class="files"><span class="icon-image"></span></span>FILES</a> -->
+						<a title="FILES" class="icon-block"><span class="files"><span class="icon-image"></span></span>FILES</a>
+                    </div>
+                    <div class="event-block-description event-details">
+                        <a class="back" href="/event/index.html" title="Back to the main Events page">Back to Events</a>
+                        <h2>
+                            <a href="/event/ixleeds2/index.html" title="IXLeeds 2">IXLeeds <span class="red-font">2</span></a>
+                        </h2>
+                        <p class="files-string">
+                            <span class="files-title">Welcome - Andy Davidson, IXLeeds board chair</span>
+                            <span class="files-icon">
+                                <span class="pdf-icon"><a href="/files/ixleeds2/presentation/andy_davidson.pdf" target="adp2"></a></span>
+                                <span class="pptx-icon"></span>
+                                <span class="video-icon"></span>
+                            </span>
+                        </p>
+                        <p class="files-string">
+                            <span class="files-title">IXLeeds Technical Update - Thomas Mangin (IXLeeds board)</span>
+                            <span class="files-icon">
+                                <span class="pdf-icon"><a href="/files/ixleeds2/presentation/thomas_mangin.pdf" target="tmp2"></a></span>
+                                <span class="pptx-icon"></span>
+                                <span class="video-icon"></span>
+                            </span>
+                        </p>
+                        <p class="files-string">
+                            <span class="files-title">Stop@Nothing - Piers Daniell, Fluidata</span>
+                            <span class="files-icon">
+                                <span class="pdf-icon"></span>
+                                <span class="pptx-icon"><a href="/files/ixleeds2/presentation/piers_daniel.pptx" target="pdp2"></a></span>
+                                <span class="video-icon"></span>
+                            </span>
+                        </p>
+                        <p class="files-string">
+                            <span class="files-title">Fibre to the Cab: An independent journey - Mark Fordyce, York Data Services</span>
+                            <span class="files-icon">
+                                <span class="pdf-icon"><a href="/files/ixleeds2/presentation/mark_fordyce.pdf" target="adp2"></a></span>
+                                <span class="pptx-icon"></span>
+                                <span class="video-icon"></span>
+                            </span>
+                        </p>
+                        <p class="files-string">
+                            <span class="files-title">IPv6 IPv6 IPv6 - Martin Levy, Hurricane Electric</span>
+                            <span class="files-icon">
+                                <span class="pdf-icon"><a href="/files/ixleeds2/presentation/martin_levy.pdf" target="mlp2"></a></span>
+                                <span class="pptx-icon"></span>
+                                <span class="video-icon"></span>
+                            </span>
+                        </p>
+                        <p class="files-string">
+                            <span class="files-title">4G LTE - Trefor Davies, Timico</span>
+                            <span class="files-icon">
+                                <span class="pdf-icon"></span>
+                                <span class="pptx-icon"><a href="/files/ixleeds2/presentation/trefor_davies.pptx" target="tdp2"></a></span>
+                                <span class="video-icon"></span>
+                            </span>
+                        </p>
+
+                        <div class="article-details">
+                            <a href="/event/ixleeds2/index.html" title="DETAILS" class="icon-block"><span class="details"><span class="icon-image"></span></span>DETAILS</a>
+                            <a title="FILES" class="icon-block active-icon"><span class="files"><span class="icon-image"></span></span>FILES</a>
+                            <a href="/event/ixleeds2/attendees.html" title="GUESTS" class="icon-block"><span class="attendees"><span class="icon-image"></span></span>GUESTS</a>
+                            <a href="/event/ixleeds2/sponsors.html" title="SPONSORS" class="icon-block"><span class="sponsor"><span class="icon-image"></span></span>SPONSORS</a>
+                            <a href="/event/ixleeds2/programme.html" title="AGENDA" class="icon-block"><span class="agenda"><span class="icon-image"></span></span>AGENDA</a>
+                            <a href="/event/ixleeds2/venue.html" title="VENUE" class="icon-block"><span class="venue"><span class="icon-image"></span></span>VENUE</a>
+                            <a href="/event/ixleeds2/register.html" title="REGISTER" class="icon-block"><span class="register"><span class="icon-image"></span></span>REGISTER</a>
+                        </div>
+                    </div>
+                </div>
+                
+            </article>
+
+            <article class="member-block member-block2">
+                <div class="member-content">
+                    <p class="member-title">Our SPONSORS</p>
+                    <div class="member-images">
+                        <? include $_SERVER['DOCUMENT_ROOT']."/include/sponsors.inc" ?>
+                    </div>
+                </div>
+            </article>
+
+           
+            <div class="clear"></div>
+
+            <!-- Content end -->
+            <!-- Footer start -->
+				<? include $_SERVER['DOCUMENT_ROOT']."/include/footer.inc" ?>
+            <!-- Footer end -->
+        </div>
+	</body>
+</html>	

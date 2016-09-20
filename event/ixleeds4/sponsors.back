@@ -1,0 +1,94 @@
+<html>
+<? 
+        include($_SERVER['DOCUMENT_ROOT']."/include/head.inc");
+        head('IXLeeds 3, Leeds Internet Exchange');
+?>
+
+<body>
+<? include $_SERVER['DOCUMENT_ROOT']."/include/top.inc" ?>
+<? include $_SERVER['DOCUMENT_ROOT']."/include/menu.inc" ?>
+
+<div class="page">Sponsors</div>
+
+<p>
+<b>IXLeeds 3 will take place at aql's Salem Chapel, Leeds on 20th June 2013.</b></p>
+
+<table border="0" cellspacing="10" cellpadding="0">
+<tr>
+                       
+                        <td class="links" align="center">
+                        <a href="/event/ixleeds3/index.html">IXLeeds 3</a>
+                </td>
+			<td class="links" align="center">
+                        <a href="/event/ixleeds3/programme.html">Programme</a>
+                </td>
+                        <td class="links" align="center">
+                        <a href="/event/ixleeds3/venue.html">Venue details</a>
+                </td>
+                        <td class="links" align="center">
+                        <a href="/event/ixleeds3/attendees.html">Attendee List</a>
+                </td>
+                        <td class="links" align="center">
+                        <a href="/event/ixleeds3/register.html">Register</a>
+                </td>
+        </tr>
+</table>
+
+
+
+<br/>
+<p>
+<b>IXLeeds 3 wouldn't exist without our sponsors, to whom we are very grateful:</b>
+<br><br>
+<center>
+<table>
+<tr>
+	<td valign="top">
+		<a href="http://www.level3.com">
+			<img src="/images/event/level3.jpg" alt="Level 3 logo" style="padding:0px;" width="200px" />
+		</a>
+		<br/><br/>
+		<a href="https://twitter.com/Level3"><img src="/images/social/twitter.png" /></a>
+		<a href="http://www.facebook.com/level3"><img src="/images/social/facebook.png" /></a>
+	</td>
+  <td valign="top" style="padding:8px;">
+<b>Level 3 Communications</b> is a premier global provider of state-of-the-art data, voice, video and managed solutions. We are a proven carrier for enterprise, wholesale, government and content customers, who rely on Level 3 to deliver advanced solutions with an industry-leading combination of efficiency and quality.<br/><br/>
+Our highly reliable and secure network enables stronger connections around the globe by delivering integrated IP solutions that address customers' needs for scalability, flexibility and efficiency.<br/><br/>
+Leveraging our expansive metro footprint and global reach, our team of dedicated people exemplifies our commitment to partnership.  We focus on understanding customers' business challenges, building relevant worldwide network solutions, and delivering a seamless, industry-leading customer experience.
+<br/><br/>
+For more information please visit <a href="http://www.level3.com">www.level3.com</a> 
+<br>
+You can also follow us on <a href="https://twitter.com/Level3">Twitter</a> or <a href="http://www.facebook.com/level3">Facebook</a>.
+<br/><br/>
+</td>
+</tr>
+
+<tr>
+	<td valign="top">
+		<a href="http://www.hardware.com">
+			<img src="/images/event/hardware.com.jpg" alt="Hardware.com logo" style="padding:0px;" width="200px" />
+		</a>
+		<br/><br/>
+		<a href="https://twitter.com/Hardwarecom_UK"><img src="/images/social/twitter.png" /></a>
+		<a href="http://www.facebook.com/hardwarecom"><img src="/images/social/facebook.png" /></a>
+		<a href="http://www.linkedin.com/company/2345192?trk=tyah"><img src="/images/social/linkedin.png" /></a>
+</td>
+  <td valign="top" style="padding:8px;">
+<b>Hardware.com</b> is an independent technical solutions provider for Corporate, SMB and Service Providers.<br/><br/>
+Hardware.com has accredited partnerships with key vendors who we believe are best positioned to support our innovative approach to the design, implementation, and support of our customer's technical ambitions for the Data Centre, Virtualisation, Server/Storage, Networking and Cloud Computing.<br/><br/>
+Our unique business model combines Expert Technical Resource, Vendor-independent solutions Architecture, E-Commerce and a suite of Professional Services - all supported by a global logistics operation.<br/><br/>
+Collectively, this allows us to simplify network operations, architectures, and budgets by delivering solutions that address the demands of new network architectures and support and extend the life of existing hardware investments.
+<br/><br/>
+For more information please visit <a href="http://www.hardware.com">www.hardware.com</a> 
+<br/>
+You can also follow us on <a href="https://twitter.com/Hardwarecom_UK">Twitter</a>, <a href="http://www.facebook.com/hardwarecom">Facebook</a> or <a href="http://www.linkedin.com/company/2345192?trk=tyah">LinkedIn</a><br/>
+</td>
+</tr>
+
+</table>
+
+	</div>
+</body>
+
+</html>
+

@@ -102,28 +102,28 @@ $(document).ready(function () {
     }
 });
 
-$(window).load(function () {
-    $(window).scroll(function () {
-        if( $('.logo-block').length ) {
-            $( '.logo-block .logo-leeds' ).animate({
-                right: '-100%'
-            }, 2000, 'linear','');
-            $( '.logo-block .logo-i' ).animate({
-                left: '-100%'
-            }, 2000, 'linear','');
-            $( '.logo-block .logo-arrow-top' ).animate({
-                left: '-150px',
-                top: '-300px'
-            }, 2000, 'linear','');
-            $( '.logo-block .logo-arrow-bottom' ).animate({
-                top: '-300px'
-            }, 2000, 'linear','');
-            $( '.logo-block' ).animate({
-                marginBottom: '-289px'
-            }, 1000, 'linear',function(){
-                $( '.logo-block' ).hide();
-            });
-        }
-        
-    });
-});
+//$(window).load(function () {
+//    $(window).scroll(function () {
+//        if( $('.logo-block').length ) {
+//            $( '.logo-block .logo-leeds' ).animate({
+//                right: '-100%'
+//            }, 2000, 'linear','');
+//            $( '.logo-block .logo-i' ).animate({
+//                left: '-100%'
+//            }, 2000, 'linear','');
+//            $( '.logo-block .logo-arrow-top' ).animate({
+//                left: '-150px',
+//                top: '-300px'
+//            }, 2000, 'linear','');
+//            $( '.logo-block .logo-arrow-bottom' ).animate({
+//                top: '-300px'
+//            }, 2000, 'linear','');
+//            $( '.logo-block' ).animate({
+//                marginBottom: '-289px'
+//            }, 1000, 'linear',function(){
+//                $( '.logo-block' ).hide();
+//            });
+//        }
+//
+//    });
+//});

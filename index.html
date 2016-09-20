@@ -1,116 +1,74 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>iXLeeds</title>
+<? 
+	// if you see this short tag was not enabled or html is not associated to php anymore
 
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        include($_SERVER['DOCUMENT_ROOT']."/include/head.inc");
+        head('IXLeeds, Leeds Internet Exchange');
+		$currentPage = 'home';
+?>
 
-        <!--[if lt IE 9]>
-            <script src="js/html5shiv.js"></script>
-        <![endif]-->
-        
-		<link rel="stylesheet" type="text/css" href="fonts/fonts.css" />
-        <link rel="stylesheet" type="text/css" href="js/jquery.bxslider.css" />
-		<link rel="stylesheet" type="text/css" href="css/style.css" />
-        <script src="js/jquery-1.11.1.min.js"></script>
-        <script src="js/jquery.flot.min.js"></script>
-        <script src="js/jquery.bxslider.min.js"></script>
-        <script src="js/common.js"></script>
-	</head>
-	<body>
-        <div class="wrapper">
-            <!-- Header start -->
-            <header>
-                <menu>
-                    <a class="menu-first-link selected" href="index.html" title="HOME">HOME
-                        <span class="link-arrow-left"></span>
-                        <span class="link-arrow-right"></span>
-                    </a>
-                    <a href="about_us.html" title="ABOUT">ABOUT
-                        <span class="link-arrow-left"></span>
-                        <span class="link-arrow-right"></span>
-                    </a>
-                    <a href="join.html" title="JOIN">JOIN
-                        <span class="link-arrow-left"></span>
-                        <span class="link-arrow-right"></span>
-                    </a>
-                    <a href="members.html" title="MEMBERS">MEMBERS
-                        <span class="link-arrow-left"></span>
-                        <span class="link-arrow-right"></span>
-                    </a>
-                    <a href="events.html" title="EVENTS">EVENTS
-                        <span class="link-arrow-left"></span>
-                        <span class="link-arrow-right"></span>
-                    </a>
-                    <a class="menu-last-link" href="outreach.html" title="OUTREACH">OUTREACH
-                        <span class="link-arrow-left"></span>
-                        <span class="link-arrow-right"></span>
-                    </a>
-                    <span class="menu-last-item"></span>
-                </menu>
-                <div class="logo-block">
-                    <a class="logo" href="#">
-                       <span class="logo-i"></span> 
-                       <span class="logo-arrow-top"></span> 
-                       <span class="logo-arrow-bottom"></span> 
-                       <span class="logo-leeds"></span> 
-                    </a>
-                </div>
-            </header>
-            <!-- Header end -->
-
+<body>
+<? include $_SERVER['DOCUMENT_ROOT']."/include/top.inc" ?>
             <!-- Content start -->
             <div class="slider">
                 <ul id="slider_container" >
-                    <li>
+<!--                     <li>
                         <div class="slider_content">
                              <div class="slider-right-block">
-                                <iframe width="100%" height="100%" src="http://www.youtube.com/embed/AhTgeRVus14" frameborder="0" allowfullscreen></iframe>
+                                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/AhTgeRVus14" frameborder="0" allowfullscreen></iframe>
                             </div>
                             <div class="slider-left-block">
                                 <p>iX Leeds is a neutral not-for-profit Internet Exchange Point (IXP) based in Leeds (UK).</p>
                                 <div>We provide a layer 2 platform to connect...</div>
                             </div>
                         </div>
-                    </li>
+                    </li> -->
                     <li>
                         <div class="slider_content">
                              <div class="slider-right-block">
-                                <iframe width="100%" height="100%" src="http://www.youtube.com/embed/AhTgeRVus14" frameborder="0" allowfullscreen></iframe>
+                                <iframe width="100%" height="100%" src="https://www.youtube.com/embed/cpAUedhcjAY" frameborder="0" allowfullscreen></iframe>
                             </div>
                             <div class="slider-left-block">
-                                <p>AA Leeds is a neutral not-for-profit Internet Exchange Point (IXP) based in Leeds (UK).</p>
-                                <div>We provide a layer 2 platform to connect...</div>
+                                <p>Leeds is a neutral not-for-profit Internet Exchange Point (IXP) based in Leeds (UK).</p>
+                                 <div>We provide a Layer-2 platform to connect and share IP traffic using BGP</div>
                             </div>
                         </div>
                     </li>
                 </ul>
             </div>
-            <article class="member-block">
+            <article class="member-block presentation-block_">
                 <div class="connect-block">
                     <p class="connect-title">CONNECT</p>
-                    <p>Get connected and loren ipsum delores sanctum pere fore setco torre loren</p>
-                    <br/>
-                    <br/>
-                    <p>Memebrship is £1,000 per annum...</p>
-                    <a class="white-button block-button" href="#">Join</a>
+                    <p>If you'd like to speak to someone face-to-face about IXLeeds, we will have representatives attending the following events:</p>
+                    <ul>
+                        <!-- <li>&gt; European Peering Forum, 9th - 11th of September 2013, Reykjavik</li> -->
+                        <li>&gt; LINX 87 , 16-17 Feb. London, UK</li>
+                        <li>&gt; LONAP 26th March, London, UK</li>
+                        <li>&gt; 26th Euro IX forum,  12-14 April, Marseille</li>
+                        <li>&gt; UKNOF 31, 20th April, Manchester, UK</li>
+                        <li>&gt; GPF, 27-30th  April, Bahamas</li>
+                        <li>&gt; RIPE 70, 11-15 May, Amsterdam</li>
+                    </ul>
+                    <div class="text-center"><a class="white-button" href="mailto:info@ixleeds.net" title="Arrange a meeting">Arrange a meeting</a></div>
                 </div>
                 <div class="member-content">
                     <p class="member-title">MEMBERS</p>
                     <div class="member-images">
-                        <img src="img/member-logo/aql.jpg" alt="" />
-                        <img src="img/member-logo/akamai.jpg" alt="" />
-                        <img src="img/member-logo/ask4.jpg" alt="" />
-                        <img src="img/member-logo/bytemark.jpg" alt="" />
-                        <img src="img/member-logo/axa-networks.jpg" alt="" />
+                        <a class="member-image" href="http://www.aql.com" target="aql"><img src="/images/logo/member/aql.jpg" alt="aql" /></a>
+                        <a class="member-image" href="http://www.akamai.com" target="akamai"><img src="/images/logo/member/akamai.jpg" alt="Akamai" /></a>
+                        <a class="member-image" href="http://www.ask4.com/" target="ask4"><img src="/images/logo/member/ask4.jpg" alt="ask4" /></a>
+                        <a class="member-image" href="http://www.bytemark.co.uk" target="bytemark"><img src="/images/logo/member/bytemark.jpg" alt="Bytemark" /></a>
+                        <a class="member-image" href="http://www.exa-networks.co.uk/" target="exa"><img src="/images/logo/member/exa.jpg" alt="Exa Networks" /></a>
+                        <!--a class="member-image" href="http://www.fluidata.co.uk/" target="fluidata"><img src="/images/logo/member/fluidata.jpg" alt="Fluidata" /></a-->
+                        <a class="member-image" href="http://www.ixreach.net" target="ixreach"><img src="/images/logo/member/ixreach.jpg" alt="IXReach" /></a>
+                        <a class="member-image" href="http://www.ja.net/" target="janet"><img src="/images/logo/member/janet.jpg" alt="JANET" /></a>
+                        <a class="member-image" href="http://www.yorkdataservices.com/" target="yds"><img src="/images/logo/member/yds.jpg" alt="York Data Services" /></a>
                     </div>
                     <p class="text-center">
-                        <a class="red-button mobile-block" href="members.html">View all members</a>
+                        <a class="red-button mobile-block" href="/content/members.html" title="Go to oour Members page">View all members</a>
                     </p>
                 </div>
             </article>
-            <article div class="statistics-block">
+            <article div class="statistics-block" style="display: none;">
                 <div class="statistics-graphics">
                     <p class="statistics-title">STATISTICS</p>
                     <div id="graph-day-label"><span class="label-number">2,397</span> Active Users</div>
@@ -143,17 +101,7 @@
             </article>
             <!-- Content end -->
             <!-- Footer start -->
-            <footer>
-                <div class="footer-contact">
-                    <a href="#">info@ixleeds.net</a><br/>
-                    Leeds, West Yorkshire LS10 1JW
-                </div>
-                <div class="social-block">
-                    <a class="fb" href="http://www.facebook.com/group.html?gid=151543478199614" target="_blank">Facebook</a>
-                    <a class="linked" href="http://www.linkedin.com/groups?mostPopular=&gid=3400377" target="_blank">LinkedIn</a>
-                    <a class="tw" href="http://twitter.com/ixleeds" target="_blank">Twitter</a>
-                </div>
-            </footer>
+				<? include $_SERVER['DOCUMENT_ROOT']."/include/footer.inc" ?>
             <!-- Footer end -->
         </div>
 	</body>

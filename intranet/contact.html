@@ -1,0 +1,181 @@
+<? 
+        include($_SERVER['DOCUMENT_ROOT']."/include/head.inc");
+        head('IXLeeds 1, Leeds Internet Exchange');
+?>
+
+<body>
+<? include $_SERVER['DOCUMENT_ROOT']."/include/top.inc" ?>
+<? include $_SERVER['DOCUMENT_ROOT']."/include/menu.inc" ?>
+
+<style type="text/css">
+	.indented {
+		margin-left: 20px;
+	}
+	.contact {
+		font-family: Arial;
+		background-color: #f3f3f3;
+		border: solid 1px #a1a1a1;
+		padding: 10px;
+		width: 600px;
+	}
+
+	.contact label {
+		display: block;
+		width: 200px;
+		float: left;
+		margin-bottom: 10px;
+		text-align: right;
+		padding-right: 20px;
+	}
+
+	.contact input {
+		display: block;
+		width: 330px;
+		float: left;
+		margin-bottom: 10px;
+	}
+
+	.contact .priority {
+		margin-right: 10px;
+		width: 30px;
+	}
+
+	.contact textarea {
+		display: block;
+		width: 430px;
+		height: 60px;
+		float: left;
+		margin-bottom: 10px;
+		text-align: left;
+		padding-right: 20px;
+	}
+
+	.contact #submit {
+		display: block;
+		width: 50px;
+		margin-bottom: 10px;
+	}
+
+	br {
+		clear: left;
+	}
+</style>
+
+<br/>
+<br/>
+
+<div class="indented">
+	<div class="contact">
+
+<?
+	$contact_id = $_GET["id"];
+
+	$db = new SQLite3("/srv/web/ixleeds.net/www/data/members.sqlite3");
+	$prepared = $db->prepare("
+
+select
+	identity.id as identity,
+	identity.name as name,
+	phone.priority as priority,
+	phone.number as number,
+	identity.role as role
+from identity
+	join phone on phone.identity = identity.id
+where
+	identity.id = :id
+order by
+	phone.priority;
+
+	");
+	$prepared->bindValue(":id", $contact_id, SQLITE3_INTEGER);
+	$results = $prepared->execute();
+
+	$first = true;
+
+	while ($row = $results->fetchArray()) {
+		$identity = $row['identity'] or '';
+		$name = $row['name'] or '';
+		$priority = $row['priority'] or '';
+		$number = $row['number'] or '';
+
+		if ($first) {
+			$role= $row['role'] or '';
+			$first = false;
+			$label = "Phone";
+			print "<label>$name</label>\n";
+			if ($role == 'true') {
+				print "<label>role contact</label>";
+			}
+			print "<br/>";
+		}
+		else {
+			$label = "";
+		}
+
+?>
+	<label><?=$label?></label>
+	<input class="priority" name="phone-<?=$priority?>-priority" value="<?=$priority?>">
+	<a href="sip:<?=str_replace(" ","",$number)?>">
+		<input name="phone-<?=$priority?>-number" value="<?=$number?>">
+	</a><br/>
+<?
+	}
+
+	$prepared = $db->prepare("
+
+select
+	identity.id as identity,
+	identity.name as name,
+	email.priority as priority,
+	email.address as address 
+from identity
+	join email on email.identity = identity.id
+where
+	identity.id = :id
+order by
+	email.priority;
+
+	");
+	$prepared->bindValue(":id", $contact_id, SQLITE3_INTEGER);
+	$results = $prepared->execute();
+
+	$first = true;
+
+	while ($row = $results->fetchArray()) {
+		$identity = $row['identity'] or '';
+		$name = $row['name'] or '';
+		$priority = $row['priority'] or '';
+		$address = $row['address'] or '';
+
+		if ($first) {
+			$first = false;
+			$label = "Email";
+		}
+		else {
+			$label = "";
+		}
+
+?>
+	<label><?=$label?></label>
+	<input class="priority" name="email-<?=$priority?>-priority" value="<?=$priority?>">
+	<a href="mailto:<?=$address?>">
+		<input name="email-<?=$priority?>-address" value="<?=$address?>">
+	</a><br/>
+<?
+	}
+
+	$prepared = $db->prepare("select member from contact where identity =:id");
+	$prepared->bindValue(":id", $contact_id, SQLITE3_INTEGER);
+	$results = $prepared->execute();
+	$row = $results->fetchArray();
+	$member = $row['member'] or ''
+	
+
+?>
+	<a href="/intranet/member.html?id=<?=$member?>"><label>Back</label></a>
+	<br/>
+	</div>
+</div>
+
+
+<html>

@@ -1,0 +1,71 @@
+<? 
+	// if you see this short tag was not enabled or html is not associated to php anymore
+
+        include($_SERVER['DOCUMENT_ROOT']."/include/head.inc");
+        head('IXLeeds 2, Leeds Internet Exchange');
+		$currentPage = 'events';
+?>
+
+<body>
+<? include $_SERVER['DOCUMENT_ROOT']."/include/top.inc" ?>
+
+
+            <!-- Content start -->
+            <article class="event-block">
+
+                <div class="content-block events-block single-event">
+                    <div class="event-block-image">
+                        <img src="/img/events/ixleeds2.jpg" title="IXLeeds 2" alt="IXLeeds 2" />
+                    </div>
+                    <div class="article-details article-details-left">
+                        <!-- <a href="/event/ixleeds2/venue.html" title="VENUE" class="icon-block"><span class="venue"><span class="icon-image"></span></span>VENUE</a> -->
+                        <a title="VENUE" class="icon-block"><span class="venue"><span class="icon-image"></span></span>VENUE</a>
+                    </div>
+                    <div class="event-block-description event-details">
+                        <a class="back" href="/event/index.html" title="Back to the main Events page">Back to Events</a>
+                        <h2>
+                            <a href="/event/ixleeds2/index.html" title="IXLeeds 2">IXLeeds <span class="red-font">2</span></a>
+                        </h2>
+						<p><b>IXLeeds 2 takes place at the Carriageworks, Leeds on 12th September 2012.</b></p>
+						
+						<img class="full-width" src="/images/event/location/carriageworks/carriageworks-theatre.jpg" alt="Carriageworks Theatre" style="padding:2px; float: right;" />
+
+						<p>The Carriageworks Theatre is a short walk from Leeds Train Station and overlooks Millennium Square.</p>
+						<p>The adress for the venue is The Electric Press, 3 Millennium Square, Leeds, LS2 3AD. </p>
+						<p>More information on the location and nearby parking facilities can be found at the <a href="http://www.carriageworkstheatre.org.uk/location_unide1fa_page.aspx" target="_blank">Carriageworks website</a>.</p>
+						<p>The evening social will take place in All Bar One, on the ground floor of the Carriageworks.</p>
+						
+	
+                        <div class="article-details">
+                            <a href="/event/ixleeds2/index.html" title="DETAILS" class="icon-block"><span class="details"><span class="icon-image"></span></span>DETAILS</a>
+                            <a href="/event/ixleeds2/files.html" title="FILES" class="icon-block"><span class="files"><span class="icon-image"></span></span>FILES</a>
+                            <a href="/event/ixleeds2/attendees.html" title="GUESTS" class="icon-block"><span class="attendees"><span class="icon-image"></span></span>GUESTS</a>
+                            <a href="/event/ixleeds2/sponsors.html" title="SPONSORS" class="icon-block"><span class="sponsor"><span class="icon-image"></span></span>SPONSORS</a>
+                            <a href="/event/ixleeds2/programme.html" title="AGENDA" class="icon-block"><span class="agenda"><span class="icon-image"></span></span>AGENDA</a>
+                            <a title="VENUE" class="icon-block active-icon"><span class="venue"><span class="icon-image"></span></span>VENUE</a>
+                            <a href="/event/ixleeds2/register.html" title="REGISTER" class="icon-block"><span class="register"><span class="icon-image"></span></span>REGISTER</a>
+                        </div>
+                    </div>
+                </div>
+                
+            </article>
+
+            <article class="member-block member-block2">
+                <div class="member-content">
+                    <p class="member-title">Our SPONSORS</p>
+                    <div class="member-images">
+                        <? include $_SERVER['DOCUMENT_ROOT']."/include/sponsors.inc" ?>
+                    </div>
+                </div>
+            </article>
+
+           
+            <div class="clear"></div>
+
+            <!-- Content end -->
+            <!-- Footer start -->
+				<? include $_SERVER['DOCUMENT_ROOT']."/include/footer.inc" ?>
+            <!-- Footer end -->
+        </div>
+	</body>
+</html>	

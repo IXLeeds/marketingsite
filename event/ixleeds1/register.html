@@ -1,0 +1,271 @@
+<? 
+	// if you see this short tag was not enabled or html is not associated to php anymore
+
+        include($_SERVER['DOCUMENT_ROOT']."/include/head.inc");
+        head('IXLeeds 1, Leeds Internet Exchange');
+		$currentPage = 'events';
+?>
+
+<body>
+<? include $_SERVER['DOCUMENT_ROOT']."/include/top.inc" ?>
+
+<?PHP
+
+	$errors = array();
+	$success = NULL;
+	$duplicate = NULL;
+	$dberror = NULL;
+
+	$first_name = (array_key_exists('first_name', $_POST)) ? str_replace("\n", " ", trim($_POST['first_name'])) : NULL;
+	$surname = (array_key_exists('surname', $_POST)) ? str_replace("\n", " ", trim($_POST['surname'])) : NULL;
+	$email = (array_key_exists('email', $_POST)) ? str_replace("\n", " ", trim($_POST['email'])) : NULL;
+	$organisation = (array_key_exists('organisation', $_POST)) ? trim($_POST['organisation']) : NULL;
+	$diet = (array_key_exists('diet', $_POST)) ? trim($_POST['diet']) : NULL;
+	$session1 = (array_key_exists('session1', $_POST)) ? trim($_POST['session1']) : NULL;
+	$session2 = (array_key_exists('session2', $_POST)) ? trim($_POST['session2']) : NULL;
+
+	$session = ($session1 or $session2) ? true : false;
+	$email = filter_var($email, FILTER_VALIDATE_EMAIL);
+
+	if ($first_name and $surname and $email and $organisation and $session) {
+		$db = new SQLite3('/srv/web/ixleeds.net/www/data/ixleeds1.sqlite3');
+//		$db = new SQLite3($_SERVER['DOCUMENT_ROOT'].'/data/ixleeds1.sqlite3');
+
+		if ($db) {
+			$safe_name = sqlite_escape_string($first_name);
+			$safe_surname = sqlite_escape_string($surname);
+			$safe_email = sqlite_escape_string($email);
+			$safe_org = sqlite_escape_string($organisation);
+			$safe_diet = $diet ? sqlite_escape_string($diet) : "";
+			$safe_sess1 = $session1 ? 'true' : 'false';
+			$safe_sess2 = $session2 ? 'true' : 'false';
+
+
+			$q = $db->query("insert into signups (name, surname, email, organisation, diet, session1, session2) select data.* from (select '$safe_name', '$safe_surname', '$safe_email' email, '$safe_org', '$safe_diet', '$safe_sess1', '$safe_sess2') as data left join signups as existing on existing.email = data.email where existing.email is null and data.email is not null");
+
+			if ($q) {
+				$results = $db->changes();
+				if ($results) {
+					$success = true;
+				} else {
+					$duplicate = true;
+				}
+			} else {
+				$dberror = true;
+			}
+		} else {
+			$dberror = true;
+		}
+	} else {
+		if ($_POST) {
+			if (!$first_name) $errors['first_name'] = true;
+			if (!$surname) $errors['surname'] = true;
+			if (!$email) $errors['email'] = true;
+			if (!$organisation) $errors['organisation'] = true;
+			if (!($session1 or $session2)) $errors['session'] = true;
+		}
+	}
+
+	if ($success) {
+		$subject = "IXLeeds 1";
+		$message = "Thank you for registering for IXLeeds 1. If you have any questions about the event or your registration please contact info@ixleeds.net";
+		$headers = "From: <info@ixleeds.net>\r\nTo: $first_name $surname <$email>";
+
+		mail($email, $subject, $message, $headers);
+
+
+		$subject = "New Registration";
+		if ($safe_sess1 == 'true') {
+			if ($safe_sess2 == 'true') {
+				$sessions = 'both sessions';
+			} else {
+				$sessions = 'session 1';
+			}
+		} else {
+			if ($safe_sess2 == 'true') {
+				$sessions = 'session 2';
+			} else {
+				$sessions = 'no sessions';
+			}
+		}
+		$message = "A new person registered for IXLeeds1.\r\n\r\n$first_name $surname from $organisation is booked for $sessions";
+		if ($diet) {
+			$message .= "\r\nDietary requirements are:\r\n\r\n$diet";
+		}
+
+		$headers = "From: <info@ixleeds.net>\r\nTo: <events@ixleeds.net>";
+
+		mail('events@ixleeds.net', $subject, $message, $headers);
+
+	}
+?>
+
+            <!-- Content start -->
+            <article class="event-block">
+
+                <div class="content-block events-block single-event">
+                    <div class="event-block-image">
+                        <img src="/img/events/ixleeds1.jpg" title="IXLeeds 1" alt="IXLeeds 1" />
+                    </div>
+                    <div class="article-details article-details-left">
+                        <a title="REGISTER" class="icon-block"><span class="register"><span class="icon-image"></span></span>REGISTER</a>
+                        <!-- <a href="/event/ixleeds1/register.html" title="REGISTER" class="icon-block"><span class="register"><span class="icon-image"></span></span>REGISTER</a> -->
+                    </div>
+                    <div class="event-block-description event-details">
+                        <a class="back" href="/event/index.html" title="Back to the main Events page">Back to Events</a>
+                        <h2>
+                            <a href="/event/ixleeds1/index.html" title="IXLeeds 1">IXLeeds <span class="red-font">1</span></a>
+                        </h2>
+                
+
+
+
+        <? if (True) { ?>
+                <h2>Registration is closed</h2>
+
+        <? } elseif ($success) { ?>
+		<h2>Thank You</h2>
+
+		<p>Your request was registered.</p>
+		<p>A confirmation mail was sent to your email address (<?=$email?>)</p>
+
+		<p><?=$first_name?> <?=$surname?> is registered to attend:</p>
+
+		<ul>
+		<? if ($session1) { ?>
+			<li>The first (technical) session</li>
+		<? } ?>
+
+		<? if ($session2) { ?>
+			<li>The second (business oriented) session</li>
+		<? } ?>
+
+		</ul>
+
+		<p>on behalf of <?=$organisation?></p>
+
+
+		<? if ($diet) { ?>
+			<p>Your dietary requirements have been noted</p>
+		<? } ?>
+
+	<? } elseif ($duplicate) { ?>
+		<h2>Duplicate data</h2>
+
+		<p>The email address <?=$email?> has already been used during event registration</p>
+
+		<p><a href="">Try again</a></p>
+       
+	<? } elseif ($dberror) { ?>
+		<h2>Database error</h2>
+
+		<p>We were unable to process your request. Please contact us on address@domain</p>
+
+		<p><a href="">Try again</a></p>
+       
+	<? } else { ?>
+		<h3>IXLeeds 1 - Online Registration</h3>
+		<p><b>Complete the form below to register for IXLeeds 1</b></p>
+		<div class="responsive-table">
+			<table>
+				<form method='POST' action=''>
+					<tr>
+						<td>First Name</td>
+						<td><input type='text' name='first_name' value='<?=$first_name?>'/></td>
+						<?if (array_key_exists('first_name', $errors)) { ?>
+							<td class='error'>This is a required field</td>
+						<? } ?>
+					</tr>
+					<tr>
+						<td>Surname</td>
+						<td><input type='text' name='surname' value='<?=$surname?>'/></td>
+						<?if (array_key_exists('surname', $errors)) { ?>
+							<td class='error'>This is a required field</td>
+						<? } ?>
+					</tr>
+					<tr>
+						<td>Email</td>
+						<td><input type='text' name='email' value='<?=$email?>'/></td>
+						<?if (array_key_exists('email', $errors)) { ?>
+							<td class='error'>This is a required field</td>
+						<? } ?>
+					</tr>
+					<tr>
+						<td>Organisation</td>
+						<td><input type='text' name='organisation' value='<?=$organisation?>'/></td>
+						<?if (array_key_exists('organisation', $errors)) { ?>
+							<td class='error'>This is a required field</td>
+						<? } ?>
+					</tr>
+					<tr>
+						<td>Dietary Requirements</td>
+						<td colspan='3'><textarea cols='40' rows='3' name='diet'><?=$diet?></textarea></td>
+					</tr>
+
+					<tr>
+						<td colspan='4'><br/>
+								Please note the event has two sessions with three speakers in each session.<br/>
+								Anyone is welcome to attend both sessions or just one, please indicate your preference:
+								<br/><br/>
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<input id="session1" type='checkbox' name='session1' value='session1' <?=$session1 ? "checked='checked'" : ''?>/>
+							<label for="session1">Attending first session</label>
+						</td>
+						<td colspan='3'>(this session is aimed at a more technical audience)</td>
+						<?if (array_key_exists('session', $errors)) { ?>
+							<td class='error'>Select at least one session</td>
+						<? } ?>
+					</tr>
+					<tr>
+						<td>
+						<input id="session2" type='checkbox' name='session2' value='session2' <?=$session2 ? "checked='checked'" : ''?>/>
+							<label for="session2">Attending second session</label>
+						</td>
+						<td colspan='3'>(this session is aimed at a general business audience)</td>
+					</tr>
+					<tr>
+						<td/>
+						<td><!--<input type='submit' value='submit'/>--></td>
+					</tr>
+				</form>
+			</table>
+		</div>
+	<? } ?>
+	
+                        <div class="article-details">
+                            <a href="/event/ixleeds1/index.html" title="DETAILS" class="icon-block"><span class="details"><span class="icon-image"></span></span>DETAILS</a>
+                            <a href="/event/ixleeds1/files.html" title="FILES" class="icon-block"><span class="files"><span class="icon-image"></span></span>FILES</a>
+                            <a href="/event/ixleeds1/attendees.html" title="GUESTS" class="icon-block"><span class="attendees"><span class="icon-image"></span></span>GUESTS</a>
+                            <a href="/event/ixleeds1/sponsors.html" title="SPONSORS" class="icon-block"><span class="sponsor"><span class="icon-image"></span></span>SPONSORS</a>
+                            <a href="/event/ixleeds1/programme.html" title="AGENDA" class="icon-block"><span class="agenda"><span class="icon-image"></span></span>AGENDA</a>
+                            <a href="/event/ixleeds1/venue.html" title="VENUE" class="icon-block"><span class="venue"><span class="icon-image"></span></span>VENUE</a>
+                            <a title="REGISTER" class="icon-block active-icon"><span class="register"><span class="icon-image"></span></span>REGISTER</a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="member-block member-block2">
+                <div class="member-content">
+                    <p class="member-title">Our SPONSORS</p>
+                    <div class="member-images">
+                        <? include $_SERVER['DOCUMENT_ROOT']."/include/sponsors.inc" ?>
+                    </div>
+                </div>
+            </article>
+
+           
+            <div class="clear"></div>
+
+            <!-- Content end -->
+
+            <!-- Footer start -->
+				<? include $_SERVER['DOCUMENT_ROOT']."/include/footer.inc" ?>
+            <!-- Footer end -->
+        </div>
+	</body>
+</html>	

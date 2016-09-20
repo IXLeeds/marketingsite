@@ -14,6 +14,7 @@ $(document).ready(function () {
             pagerCustom: '.bx-pager'
         });
     }
+/*
     if( $('#slider-board').length ) {
         $('#slider-board').bxSlider({
             adaptiveHeight: true,
@@ -22,7 +23,7 @@ $(document).ready(function () {
             prevSelector: '.slider-board-prev'
         });
     }
-
+*/
     
     if( $('.social-block').length ) {
         $('.social-block a').hover(function(){
@@ -102,26 +103,33 @@ $(document).ready(function () {
     }
 });
 
+
+/*
+======================================
+code for animation on the ixleeds logo
+======================================
+ */
+ /*
 $(window).load(function () {
-    if( $('.logo-block').length ) {
-        $( '.logo-block .logo-leeds' ).animate({
-            right: '-100%'
-        }, 2000, 'linear','');
-        $( '.logo-block .logo-i' ).animate({
-            left: '-100%'
-        }, 2000, 'linear','');
-        $( '.logo-block .logo-arrow-top' ).animate({
-            left: '-150px',
-            top: '-300px'
-        }, 2000, 'linear','');
-        $( '.logo-block .logo-arrow-bottom' ).animate({
-            top: '-300px'
-        }, 2000, 'linear','');
-        $( '.logo-block' ).animate({
-            marginBottom: '-289px'
-        }, 1000, 'linear',function(){
-            $( '.logo-block' ).hide();
-        });
-    }
-    
-});
+   if( $('.logo-block').length ) {
+       $( '.logo-block .logo-leeds' ).animate({
+           right: '-100%'
+       }, 2000, 'linear','');
+       $( '.logo-block .logo-i' ).animate({
+           left: '-100%'
+       }, 2000, 'linear','');
+       $( '.logo-block .logo-arrow-top' ).animate({
+           left: '-150px',
+           top: '-300px'
+       }, 2000, 'linear','');
+       $( '.logo-block .logo-arrow-bottom' ).animate({
+           top: '-300px'
+       }, 2000, 'linear','');
+       $( '.logo-block' ).animate({
+           marginBottom: '-289px'
+       }, 1000, 'linear',function(){
+           $( '.logo-block' ).hide();
+       });
+   }
+
+});*/
