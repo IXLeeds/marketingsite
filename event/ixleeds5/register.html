@@ -8,6 +8,23 @@
 <body>
 <? include $_SERVER['DOCUMENT_ROOT']."/include/top.inc" ?>
 
+            <!-- Content start -->
+            <article class="event-block">
+
+                <div class="content-block events-block single-event">
+                    <div class="event-block-image">
+                        <img src="/img/events/ixleeds5.jpg" title="IXLeeds 5" alt="IXLeeds 5" />
+                    </div>
+                    <div class="article-details article-details-left">
+                        <!-- <a href="/event/ixleeds5/programme.html" title="AGENDA" class="icon-block"><span class="agenda"><span class="icon-image"></span></span>AGENDA</a> -->
+                        <a title="AGENDA" class="icon-block"><span class="agenda"><span class="icon-image"></span></span>AGENDA</a>
+                    </div>
+                    <div class="event-block-description event-details">
+                        <a class="back" href="/event/index.html" title="Back to the main Events page">Back to Events</a>
+                        <h2>
+                            <a href="/event/ixleeds5/index.html" title="IXLeeds 5">IXLeeds <span class="red-font">5</span></a>
+                        </h2>
+
 <?PHP
 
 	$errors = array();
@@ -78,20 +95,6 @@
 
 	}
 ?>
-
-<table border="0" cellspacing="10" cellpadding="0"><tr>
-                       
-                        <td class="links" align="center">
-                        <a href="/event/ixleeds5/index.html">IXLeeds 5</a>
-                </td>
-                        <td class="links" align="center">
-                        <a href="/event/ixleeds5/venue.html">Venue details</a>
-                </td>
-                        <td class="links" align="center">
-                        <a href="/event/ixleeds5/attendees.html">Attendee List</a>
-                </td>
-        </tr>           
-</table>  
 
 	<? if ($success) { ?>
 		<h2>Thank You</h2>
@@ -167,6 +170,20 @@
 			</form>
 		</table>
 	<? } ?>
+
+                        <div class="article-details">
+                            <a href="/event/ixleeds5/index.html" title="DETAILS" class="icon-block"><span class="details"><span class="icon-image"></span></span>DETAILS</a>
+                            <!--a href="/event/ixleeds5/files.html" title="FILES" class="icon-block"><span class="files"><span class="icon-image"></span></span>FILES</a-->
+                            <a href="/event/ixleeds5/attendees.html" title="GUESTS" class="icon-block"><span class="attendees"><span class="icon-image"></span></span>GUESTS</a>
+                            <a href="/event/ixleeds5/sponsors.html" title="SPONSORS" class="icon-block"><span class="sponsor"><span class="icon-image"></span></span>SPONSORS</a>
+                            <a href="/event/ixleeds5/programme.html" title="AGENDA" class="icon-block"><span class="agenda"><span class="icon-image"></span></span>AGENDA</a>
+                            <a href="/event/ixleeds5/venue.html" title="VENUE" class="icon-block"><span class="venue"><span class="icon-image"></span></span>VENUE</a>
+                            <a title="REGISTER" class="icon-block active-icon"><span class="register"><span class="icon-image"></span></span>REGISTER</a>
+                        </div>
+                    </div>
+                </div>
+
+            </article>
 
 	</div>
 	</body>
