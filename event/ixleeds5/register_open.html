@@ -24,7 +24,7 @@
 	$email = filter_var($email, FILTER_VALIDATE_EMAIL);
 
 	if ($first_name and $surname and $email and $organisation) {
-		$db = new SQLite3('/srv/web/ixleeds.net/www/data/ixleeds5.sqlite3');
+		$db = new SQLite3('/var/www/ixleeds.net/www/data/ixleeds5.sqlite3');
 
 		if ($db) {
 			$safe_name = SQLite3::escapeString($first_name);
@@ -67,7 +67,7 @@
 
 
 		$subject = "New Registration";
-		$message = "A new person registered for IXLeeds4.\r\n\r\n$first_name $surname from $organisation is booked";
+		$message = "A new person registered for IXLeeds5.\r\n\r\n$first_name $surname from $organisation is booked";
 		if ($diet) {
 			$message .= "\r\nDietary requirements are:\r\n\r\n$diet";
 		}

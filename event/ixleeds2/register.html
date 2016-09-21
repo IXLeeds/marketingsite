@@ -27,7 +27,7 @@
 	$email = filter_var($email, FILTER_VALIDATE_EMAIL);
 
 	if ($first_name and $surname and $email and $organisation) {
-		$db = new SQLite3('/srv/web/ixleeds.net/www/data/ixleeds2.sqlite3');
+		$db = new SQLite3('/var/www/ixleeds.net/www/data/ixleeds2.sqlite3');
 		//$db = new SQLite3($_SERVER['DOCUMENT_ROOT'].'/data/ixleeds2.sqlite3');
 
 		if ($db) {

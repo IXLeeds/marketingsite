@@ -9,7 +9,7 @@
 <? include $_SERVER['DOCUMENT_ROOT']."/include/menu.inc" ?>
 
 <?PHP
-	$db = new SQLite3('/srv/web/ixleeds.net/www/data/members.sqlite3');
+	$db = new SQLite3('/var/www/ixleeds.net/www/data/members.sqlite3');
 	$results = $db->query("select name,id,asn from members order by nick");
 ?>
 

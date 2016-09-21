@@ -64,7 +64,7 @@
                     </tr>
 <?
 
-$db = new SQLite3('/srv/web/ixleeds.net/www/data/members.sqlite3');
+$db = new SQLite3('/var/www/ixleeds.net/www/data/members.sqlite3');
 //$db = new SQLite3($_SERVER['DOCUMENT_ROOT'].'/data/members.sqlite3');
 $results = $db->query("select id,name,asn,nick,url from members where id>0 and asn != 20712 and asn != 39545 order by name");
 

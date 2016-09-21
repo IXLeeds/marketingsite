@@ -1,16 +1,12 @@
+<html>
 <? 
-	// if you see this short tag was not enabled or html is not associated to php anymore
-
         include($_SERVER['DOCUMENT_ROOT']."/include/head.inc");
         head('IXLeeds 5, Leeds Internet Exchange');
-		$currentPage = 'events';
+        $currentPage = 'events';
 ?>
 
 <body>
 <? include $_SERVER['DOCUMENT_ROOT']."/include/top.inc" ?>
-
-
-
 
 <?PHP
 
@@ -28,15 +24,14 @@
 	$email = filter_var($email, FILTER_VALIDATE_EMAIL);
 
 	if ($first_name and $surname and $email and $organisation) {
-		$db = new SQLite3('/srv/web/ixleeds.net/www/data/ixleeds2.sqlite3');
-		//$db = new SQLite3($_SERVER['DOCUMENT_ROOT'].'/data/ixleeds5.sqlite3');
+		$db = new SQLite3('/var/www/ixleeds.net/www/data/ixleeds5.sqlite3');
 
 		if ($db) {
-			$safe_name = sqlite_escape_string($first_name);
-			$safe_surname = sqlite_escape_string($surname);
-			$safe_email = sqlite_escape_string($email);
-			$safe_org = sqlite_escape_string($organisation);
-			$safe_diet = $diet ? sqlite_escape_string($diet) : "";
+			$safe_name = SQLite3::escapeString($first_name);
+			$safe_surname = SQLite3::escapeString($surname);
+			$safe_email = SQLite3::escapeString($email);
+			$safe_org = SQLite3::escapeString($organisation);
+			$safe_diet = $diet ? SQLite3::escapeString($diet) : "";
 
 
 			$q = $db->query("insert into signups (name, surname, email, organisation, diet) select data.* from (select '$safe_name', '$safe_surname', '$safe_email' email, '$safe_org', '$safe_diet') as data left join signups as existing on existing.email = data.email where existing.email is null and data.email is not null");
@@ -72,7 +67,7 @@
 
 
 		$subject = "New Registration";
-		$message = "A new person registered for ixleeds5.\r\n\r\n$first_name $surname from $organisation is booked";
+		$message = "A new person registered for IXLeeds5.\r\n\r\n$first_name $surname from $organisation is booked";
 		if ($diet) {
 			$message .= "\r\nDietary requirements are:\r\n\r\n$diet";
 		}
@@ -83,32 +78,22 @@
 
 	}
 ?>
-            <!-- Content start -->
-            <article class="event-block">
 
-                <div class="content-block events-block single-event">
-                    <div class="event-block-image">
-                        <img src="/img/events/ixleeds5.jpg" title="IXLeeds 5" alt="IXLeeds 5" />
-                    </div>
-                    <div class="article-details article-details-left">
-                        <!-- <a href="/event/ixleeds5/register.html" title="REGISTER" class="icon-block"><span class="register"><span class="icon-image"></span></span>REGISTER</a> -->
-                        <a title="REGISTER" class="icon-block"><span class="register"><span class="icon-image"></span></span>REGISTER</a>
-                    </div>
-                    <div class="event-block-description event-details">
-                        <a class="back" href="/event/index.html" title="Back to the main Events page">Back to Events</a>
-                        <h2>
-                            <a href="/event/ixleeds5/index.html" title="IXLeeds 5">IXLeeds <span class="red-font">4</span></a>
-                        </h2>
+<table border="0" cellspacing="10" cellpadding="0"><tr>
+                       
+                        <td class="links" align="center">
+                        <a href="/event/ixleeds5/index.html">IXLeeds 5</a>
+                </td>
+                        <td class="links" align="center">
+                        <a href="/event/ixleeds5/venue.html">Venue details</a>
+                </td>
+                        <td class="links" align="center">
+                        <a href="/event/ixleeds5/attendees.html">Attendee List</a>
+                </td>
+        </tr>           
+</table>  
 
-
-	<? if (True) { ?>
-		<h2>Registration is complete </h2>
-
-		<p>Drop the IXLeeds team an email if you would like to enquire whether there are any remaining spaces.</p>
-
-		<p><a href="/event/ixleeds5/index.html">See more about IXLeeds 5</a></p>
-
-	<? } elseif ($success) { ?>
+	<? if ($success) { ?>
 		<h2>Thank You</h2>
 
 		<p>Your request was registered.</p>
@@ -140,80 +125,49 @@
 	<? } else { ?>
 		<div class="page">IXLeeds 5 - Online Registration</div>
 		<p><b>Complete the form below to register for IXLeeds 5</b></p>
-		<div class="responsive-table">
-			<table>
-				<form method='POST' action=''>
-					<tr>
-						<td>First Name</td>
-						<td><input type='text' name='first_name' value='<?=$first_name?>'/></td>
-						<?if (array_key_exists('first_name', $errors)) { ?>
-							<td class='error'>This is a required field</td>
-						<? } ?>
-					</tr>
-					<tr>
-						<td>Surname</td>
-						<td><input type='text' name='surname' value='<?=$surname?>'/></td>
-						<?if (array_key_exists('surname', $errors)) { ?>
-							<td class='error'>This is a required field</td>
-						<? } ?>
-					</tr>
-					<tr>
-						<td>Email</td>
-						<td><input type='text' name='email' value='<?=$email?>'/></td>
-						<?if (array_key_exists('email', $errors)) { ?>
-							<td class='error'>This is a required field</td>
-						<? } ?>
-					</tr>
-					<tr>
-						<td>Organisation</td>
-						<td><input type='text' name='organisation' value='<?=$organisation?>'/></td>
-						<?if (array_key_exists('organisation', $errors)) { ?>
-							<td class='error'>This is a required field</td>
-						<? } ?>
-					</tr>
-					<tr>
-						<td>Dietary Requirements</td>
-						<td colspan='3'><textarea cols='40' rows='3' name='diet'><?=$diet?></textarea></td>
-					</tr>
+		<table>
+			<form method='POST' action=''>
+				<tr>
+					<td>First Name</td>
+					<td><input type='text' name='first_name' value='<?=$first_name?>'/></td>
+					<?if (array_key_exists('first_name', $errors)) { ?>
+						<td class='error'>This is a required field</td>
+					<? } ?>
+				</tr>
+				<tr>
+					<td>Surname</td>
+					<td><input type='text' name='surname' value='<?=$surname?>'/></td>
+					<?if (array_key_exists('surname', $errors)) { ?>
+						<td class='error'>This is a required field</td>
+					<? } ?>
+				</tr>
+				<tr>
+					<td>Email</td>
+					<td><input type='text' name='email' value='<?=$email?>'/></td>
+					<?if (array_key_exists('email', $errors)) { ?>
+						<td class='error'>This is a required field</td>
+					<? } ?>
+				</tr>
+				<tr>
+					<td>Organisation</td>
+					<td><input type='text' name='organisation' value='<?=$organisation?>'/></td>
+					<?if (array_key_exists('organisation', $errors)) { ?>
+						<td class='error'>This is a required field</td>
+					<? } ?>
+				</tr>
+				<tr>
+					<td>Dietary Requirements</td>
+					<td colspan='3'><textarea cols='40' rows='3' name='diet'><?=$diet?></textarea></td>
+				</tr>
 
-					<tr>
-						<td/>
-						<td><!--<input type='submit' value='submit'/>--></td>
-					</tr>
-				</form>
-			</table>
-		</div>
+				<tr>
+					<td/>
+					<td><input type='submit' value='submit'/></td>
+				</tr>
+			</form>
+		</table>
 	<? } ?>
-                        <div class="article-details">
-                            <a href="/event/ixleeds5/index.html" title="DETAILS" class="icon-block"><span class="details"><span class="icon-image"></span></span>DETAILS</a>
-                            <!--a href="/event/ixleeds5/files.html" title="FILES" class="icon-block"><span class="files"><span class="icon-image"></span></span>FILES</a-->
-                            <a href="/event/ixleeds5/attendees.html" title="GUESTS" class="icon-block"><span class="attendees"><span class="icon-image"></span></span>GUESTS</a>
-                            <a href="/event/ixleeds5/sponsors.html" title="SPONSORS" class="icon-block"><span class="sponsor"><span class="icon-image"></span></span>SPONSORS</a>
-                            <a href="/event/ixleeds5/programme.html" title="AGENDA" class="icon-block"><span class="agenda"><span class="icon-image"></span></span>AGENDA</a>
-                            <a href="/event/ixleeds5/venue.html" title="VENUE" class="icon-block"><span class="venue"><span class="icon-image"></span></span>VENUE</a>
-                            <a title="REGISTER" class="icon-block active-icon"><span class="register"><span class="icon-image"></span></span>REGISTER</a>
-                        </div>
-                    </div>
-                </div>
-            </article>
 
-            <article class="member-block member-block2">
-                <div class="member-content">
-                    <p class="member-title">Our SPONSORS</p>
-                    <div class="member-images">
-                        <? include $_SERVER['DOCUMENT_ROOT']."/include/sponsors.inc" ?>
-                    </div>
-                </div>
-            </article>
-
-           
-            <div class="clear"></div>
-
-            <!-- Content end -->
-
-            <!-- Footer start -->
-				<? include $_SERVER['DOCUMENT_ROOT']."/include/footer.inc" ?>
-            <!-- Footer end -->
-        </div>
+	</div>
 	</body>
-</html>	
+</html>

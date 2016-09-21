@@ -20,7 +20,7 @@
 
 
 
-	$db = new SQLite3('/srv/web/ixleeds.net/www/data/ixleeds3.sqlite3');
+	$db = new SQLite3('/var/www/ixleeds.net/www/data/ixleeds3.sqlite3');
 	//$db = new SQLite3($_SERVER['DOCUMENT_ROOT'].'/data/ixleeds3.sqlite3');
 	
 	$results = $db->query("select name, surname, organisation from signups order by organisation");

@@ -10,7 +10,7 @@
 <?PHP
 	$member_id= $_GET["id"];
 
-	$db = new SQLite3("/srv/web/ixleeds.net/www/data/members.sqlite3");
+	$db = new SQLite3("/var/www/ixleeds.net/www/data/members.sqlite3");
 	$prepared = $db->prepare("select name,id,asn,url from members where id=:id");
 	$prepared->bindValue(":id", $member_id, SQLITE3_INTEGER);
 	$results = $prepared->execute();

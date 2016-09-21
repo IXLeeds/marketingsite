@@ -19,7 +19,7 @@ Organisations that are currently connected to IXLeeds (in alphabetical order):
 <table border="1" cellpadding="5">
 <?
 
-$db = new SQLite3('/srv/web/ixleeds.net/www/data/members.sqlite3');
+$db = new SQLite3('/var/www/ixleeds.net/www/data/members.sqlite3');
 $results = $db->query("select id,name,asn,nick,url from members where id>0 order by name");
 
 if ($results) {

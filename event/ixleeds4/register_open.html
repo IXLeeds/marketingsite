@@ -24,7 +24,7 @@
 	$email = filter_var($email, FILTER_VALIDATE_EMAIL);
 
 	if ($first_name and $surname and $email and $organisation) {
-		$db = new SQLite3('/srv/web/ixleeds.net/www/data/ixleeds4.sqlite3');
+		$db = new SQLite3('/var/www/ixleeds.net/www/data/ixleeds4.sqlite3');
 
 		if ($db) {
 			$safe_name = SQLite3::escapeString($first_name);
