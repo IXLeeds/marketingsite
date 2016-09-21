@@ -3,7 +3,7 @@
 	<header>
 		<menu>
     <? if ($currentPage == 'home') { ?> 
-			<!--a class="menu-first-link <? if ($currentPage == 'home') { echo selected;} ?>" href="/index.html" title="HOME">HOME
+			<!--a class="menu-first-link <? if ($currentPage == 'home') { echo 'selected';} ?>" href="/index.html" title="HOME">HOME
 				<span class="link-arrow-left"></span>
 				<span class="link-arrow-right"></span>
 			</a-->
@@ -17,7 +17,7 @@
            <span><img src="/img/logo.png" alt="IXLeeds" /></span>
 				<span class="link-arrow-right"></span>
         </a>-->
-			<a class="menu-first-link <? if ($currentPage == 'home') { echo selected;} ?>" href="/index.html" title="HOME">HOME
+			<a class="menu-first-link <? if ($currentPage == 'home') { echo 'selected';} ?>" href="/index.html" title="HOME">HOME
 				<span class="link-arrow-left"></span>
 				<span class="link-arrow-right"></span>
 			</a>

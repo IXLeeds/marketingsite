@@ -2,7 +2,7 @@
 	// if you see this short tag was not enabled or html is not associated to php anymore
 
         include($_SERVER['DOCUMENT_ROOT']."/include/head.inc");
-        head('IXLeeds 4, Leeds Internet Exchange');
+        head('IXLeeds 5, Leeds Internet Exchange');
 		$currentPage = 'events';
 ?>
 
@@ -29,7 +29,7 @@
 
 	if ($first_name and $surname and $email and $organisation) {
 		$db = new SQLite3('/srv/web/ixleeds.net/www/data/ixleeds2.sqlite3');
-		//$db = new SQLite3($_SERVER['DOCUMENT_ROOT'].'/data/ixleeds4.sqlite3');
+		//$db = new SQLite3($_SERVER['DOCUMENT_ROOT'].'/data/ixleeds5.sqlite3');
 
 		if ($db) {
 			$safe_name = sqlite_escape_string($first_name);
@@ -64,15 +64,15 @@
 	}
 
 	if ($success) {
-		$subject = "IXLeeds 4";
-		$message = "Thank you for registering for IXLeeds 4. If you have any questions about the event or your registration please contact events@ixleeds.net";
+		$subject = "IXLeeds 5";
+		$message = "Thank you for registering for IXLeeds 5. If you have any questions about the event or your registration please contact events@ixleeds.net";
 		$headers = "From: <events@ixleeds.net>\r\nTo: $first_name $surname <$email>";
 
 		mail($email, $subject, $message, $headers);
 
 
 		$subject = "New Registration";
-		$message = "A new person registered for ixleeds4.\r\n\r\n$first_name $surname from $organisation is booked";
+		$message = "A new person registered for ixleeds5.\r\n\r\n$first_name $surname from $organisation is booked";
 		if ($diet) {
 			$message .= "\r\nDietary requirements are:\r\n\r\n$diet";
 		}
@@ -88,16 +88,16 @@
 
                 <div class="content-block events-block single-event">
                     <div class="event-block-image">
-                        <img src="/img/events/ixleeds4.jpg" title="IXLeeds 4" alt="IXLeeds 4" />
+                        <img src="/img/events/ixleeds5.jpg" title="IXLeeds 5" alt="IXLeeds 5" />
                     </div>
                     <div class="article-details article-details-left">
-                        <!-- <a href="/event/ixleeds4/register.html" title="REGISTER" class="icon-block"><span class="register"><span class="icon-image"></span></span>REGISTER</a> -->
+                        <!-- <a href="/event/ixleeds5/register.html" title="REGISTER" class="icon-block"><span class="register"><span class="icon-image"></span></span>REGISTER</a> -->
                         <a title="REGISTER" class="icon-block"><span class="register"><span class="icon-image"></span></span>REGISTER</a>
                     </div>
                     <div class="event-block-description event-details">
                         <a class="back" href="/event/index.html" title="Back to the main Events page">Back to Events</a>
                         <h2>
-                            <a href="/event/ixleeds4/index.html" title="IXLeeds 4">IXLeeds <span class="red-font">4</span></a>
+                            <a href="/event/ixleeds5/index.html" title="IXLeeds 5">IXLeeds <span class="red-font">4</span></a>
                         </h2>
 
 
@@ -106,7 +106,7 @@
 
 		<p>Drop the IXLeeds team an email if you would like to enquire whether there are any remaining spaces.</p>
 
-		<p><a href="/event/ixleeds4/index.html">See more about IXLeeds 4</a></p>
+		<p><a href="/event/ixleeds5/index.html">See more about IXLeeds 5</a></p>
 
 	<? } elseif ($success) { ?>
 		<h2>Thank You</h2>
@@ -114,7 +114,7 @@
 		<p>Your request was registered.</p>
 		<p>A confirmation mail was sent to your email address (<?=$email?>)</p>
 
-		<p><?=$first_name?> <?=$surname?> is registered to attend IXLeeds 4</p>
+		<p><?=$first_name?> <?=$surname?> is registered to attend IXLeeds 5</p>
 
 		<p>on behalf of <?=$organisation?></p>
 
@@ -138,8 +138,8 @@
 		<p><a href="">Try again</a></p>
        
 	<? } else { ?>
-		<div class="page">IXLeeds 4 - Online Registration</div>
-		<p><b>Complete the form below to register for IXLeeds 4</b></p>
+		<div class="page">IXLeeds 5 - Online Registration</div>
+		<p><b>Complete the form below to register for IXLeeds 5</b></p>
 		<div class="responsive-table">
 			<table>
 				<form method='POST' action=''>
@@ -185,12 +185,12 @@
 		</div>
 	<? } ?>
                         <div class="article-details">
-                            <a href="/event/ixleeds4/index.html" title="DETAILS" class="icon-block"><span class="details"><span class="icon-image"></span></span>DETAILS</a>
-                            <!--a href="/event/ixleeds4/files.html" title="FILES" class="icon-block"><span class="files"><span class="icon-image"></span></span>FILES</a-->
-                            <a href="/event/ixleeds4/attendees.html" title="GUESTS" class="icon-block"><span class="attendees"><span class="icon-image"></span></span>GUESTS</a>
-                            <a href="/event/ixleeds4/sponsors.html" title="SPONSORS" class="icon-block"><span class="sponsor"><span class="icon-image"></span></span>SPONSORS</a>
-                            <a href="/event/ixleeds4/programme.html" title="AGENDA" class="icon-block"><span class="agenda"><span class="icon-image"></span></span>AGENDA</a>
-                            <a href="/event/ixleeds4/venue.html" title="VENUE" class="icon-block"><span class="venue"><span class="icon-image"></span></span>VENUE</a>
+                            <a href="/event/ixleeds5/index.html" title="DETAILS" class="icon-block"><span class="details"><span class="icon-image"></span></span>DETAILS</a>
+                            <!--a href="/event/ixleeds5/files.html" title="FILES" class="icon-block"><span class="files"><span class="icon-image"></span></span>FILES</a-->
+                            <a href="/event/ixleeds5/attendees.html" title="GUESTS" class="icon-block"><span class="attendees"><span class="icon-image"></span></span>GUESTS</a>
+                            <a href="/event/ixleeds5/sponsors.html" title="SPONSORS" class="icon-block"><span class="sponsor"><span class="icon-image"></span></span>SPONSORS</a>
+                            <a href="/event/ixleeds5/programme.html" title="AGENDA" class="icon-block"><span class="agenda"><span class="icon-image"></span></span>AGENDA</a>
+                            <a href="/event/ixleeds5/venue.html" title="VENUE" class="icon-block"><span class="venue"><span class="icon-image"></span></span>VENUE</a>
                             <a title="REGISTER" class="icon-block active-icon"><span class="register"><span class="icon-image"></span></span>REGISTER</a>
                         </div>
                     </div>

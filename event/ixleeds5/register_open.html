@@ -1,7 +1,7 @@
 <html>
 <? 
         include($_SERVER['DOCUMENT_ROOT']."/include/head.inc");
-        head('IXLeeds 4, Leeds Internet Exchange');
+        head('IXLeeds 5, Leeds Internet Exchange');
 ?>
 
 <body>
@@ -24,7 +24,7 @@
 	$email = filter_var($email, FILTER_VALIDATE_EMAIL);
 
 	if ($first_name and $surname and $email and $organisation) {
-		$db = new SQLite3('/srv/web/ixleeds.net/www/data/ixleeds4.sqlite3');
+		$db = new SQLite3('/srv/web/ixleeds.net/www/data/ixleeds5.sqlite3');
 
 		if ($db) {
 			$safe_name = SQLite3::escapeString($first_name);
@@ -59,8 +59,8 @@
 	}
 
 	if ($success) {
-		$subject = "IXLeeds 4";
-		$message = "Thank you for registering for IXLeeds 4. If you have any questions about the event or your registration please contact events@ixleeds.net";
+		$subject = "IXLeeds 5";
+		$message = "Thank you for registering for IXLeeds 5. If you have any questions about the event or your registration please contact events@ixleeds.net";
 		$headers = "From: <events@ixleeds.net>\r\nTo: $first_name $surname <$email>";
 
 		mail($email, $subject, $message, $headers);
@@ -82,13 +82,13 @@
 <table border="0" cellspacing="10" cellpadding="0"><tr>
                        
                         <td class="links" align="center">
-                        <a href="/event/ixleeds4/index.html">IXLeeds 4</a>
+                        <a href="/event/ixleeds5/index.html">IXLeeds 5</a>
                 </td>
                         <td class="links" align="center">
-                        <a href="/event/ixleeds4/venue.html">Venue details</a>
+                        <a href="/event/ixleeds5/venue.html">Venue details</a>
                 </td>
                         <td class="links" align="center">
-                        <a href="/event/ixleeds4/attendees.html">Attendee List</a>
+                        <a href="/event/ixleeds5/attendees.html">Attendee List</a>
                 </td>
         </tr>           
 </table>  
@@ -99,7 +99,7 @@
 		<p>Your request was registered.</p>
 		<p>A confirmation mail was sent to your email address (<?=$email?>)</p>
 
-		<p><?=$first_name?> <?=$surname?> is registered to attend IXLeeds 4</p>
+		<p><?=$first_name?> <?=$surname?> is registered to attend IXLeeds 5</p>
 
 		<p>on behalf of <?=$organisation?></p>
 
@@ -123,8 +123,8 @@
 		<p><a href="">Try again</a></p>
        
 	<? } else { ?>
-		<div class="page">IXLeeds 4 - Online Registration</div>
-		<p><b>Complete the form below to register for IXLeeds 4</b></p>
+		<div class="page">IXLeeds 5 - Online Registration</div>
+		<p><b>Complete the form below to register for IXLeeds 5</b></p>
 		<table>
 			<form method='POST' action=''>
 				<tr>
