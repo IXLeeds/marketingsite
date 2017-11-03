@@ -9,7 +9,7 @@
 <body>
 <? include $_SERVER['DOCUMENT_ROOT']."/include/top.inc" ?>
             <!-- Content start -->
-            <article div class="statistics-block">
+            <!-- <article div class="statistics-block">
                 <div class="statistics-graphics">
                     <p class="statistics-title">STATISTICS</p>
                     <div class="small-image-block">
@@ -50,154 +50,38 @@
                         </div>
                     </div>
                 </div>
-            </article>
+            </article> -->
+
             <div class="responsive-table mb36px">
                 <table class="member-table">
-                    <tr>
-                        <th width="110"><span class="member-table-caption">MEMBERS</span></th>
-                        <th>ASN</th>
-                        <th>Speed</th>
-                        <th>IPv4 1.5k</th>
-                        <th>IPv4 9k</th>
-                        <th>IPv6 1.5k</th>
-                        <th>IPv6 9k</th>
-                    </tr>
-<?
-
-$db = new SQLite3('/var/www/ixleeds.net/www/data/members.sqlite3');
-//$db = new SQLite3($_SERVER['DOCUMENT_ROOT'].'/data/members.sqlite3');
-$results = $db->query("select id,name,asn,nick,url from members where id>0 and asn != 20712 and asn != 39545 order by name");
-
-if ($results) {
-while ($row = $results->fetchArray()) {
-	$id = $row['id'] or '';
-	$name = $row['name'] or '';
-	$asn = $row['asn'] or '';
-	$nick = $row['nick'] or '';
-	$url = $row['url'] or '';
-
-        $prepared = $db->prepare("
-select
-        switch.name as switch,
-        linecard.number as linecard,
-        port.number as port,
-        presentation.name as speed
-from port
-        join presentation on presentation.id = port.presentation
-        join linecard on linecard.id = port.linecard
-        join switch on switch.id = linecard.switch
-where
-        member = :id;");
-        $prepared->bindValue(":id", $id, SQLITE3_INTEGER);
-        $r = $prepared->execute();
-
-        $row = $r->fetchArray();
-        $switch = $row['switch'] or '';
-        $linecard = $row['linecard'] or '';
-        $port = $row['port'] or '';
-        $speed = $row['speed'] or '';
-	$speed = str_replace(" ","&nbsp;",$speed);
-
-        $prepared = $db->prepare("
-select
-	security.ip as ip
-from port
-	join linecard on linecard.id = port.linecard
-	join switch on switch.id = linecard.switch
-	join security on security.linecard = linecard.id and security.port = port.number
-where
-	member = :id;");
-        $prepared->bindValue(":id", $id, SQLITE3_INTEGER);
-        $r = $prepared->execute();
-	$ip1k = '';
-	$ip9k = '';
-	$ipv61k = '';
-	$ipv69k = '';
-	while ($row = $r->fetchArray()) {
-		$ip = $row['ip'];
-		if (substr($ip,0,11) == '91.217.231.') {
-			$ip1k = $ip;
-		}
-		if (substr($ip,0,10) == '91.234.18.') {
-			$ip9k = $ip;
-		}
-		if (substr($ip,0,13) == '2001:7F8:67::') {
-			$ipv61k = strtolower($ip);
-		}
-		if (substr($ip,0,14) == '2001:7F8:67:9:') {
-			$ipv69k = strtolower($ip);
-		}
-	}
-
-?>
-                   <tr>
-                        <td><a class="member-logo" href="<?=$url?>" target="<?=$nick?>"><img src="/images/logo/member/<?=$nick?>.jpg" alt="<?=$name?> Logo" ></a></td>
-                        <td><a href="http://peeringdb.com/view.php?asn=<?=$asn?>" target="<?=$nick?>">AS<?=$asn?></a></td>
-                        <td><?=$speed?></td>
-                        <td><?=$ip1k?></td>
-                        <td><?=$ip9k?></td>
-                        <td><?=$ipv61k?></td>
-                        <td><?=$ipv69k?></td>
-                    </tr>
-<?
-	} 
-} 
-?>
-
-					<tr>
-						<td><center><a class="member-logo" href="http://www.cwc.com/" target="cw"><img src="/images/logo/member/cwc.png" alt="Cable and Wireless Logo" /></a></td>
-						<td><a href="http://peeringdb.com/view.php?asn=25310" target="cw">AS25310</a></td>
-						<td>10&nbsp;Gb</td>
-						<td>91.217.231.25</td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>  
-					<tr>
-						<td><a class="member-logo" href="http://allegro.net/" target="allegro"><img src="/images/logo/member/allegro.jpg" alt="Allegro Logo" /></a></td>
-						<td><a href="http://peeringdb.com/view.php?asn=12536" target="cw">AS12536</a></td>
-						<td>10&nbsp;Gb</td>
-						<td>91.217.231.27</td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>  
-					<tr>
-						<td><a class="member-logo" href="http://www.boundlesscomms.com" target="boundless"><img src="/images/logo/member/boundless.png" alt="Boundless Communications Logo" /></a></td>
-						<td><a href="http://peeringdb.com/view.php?asn=57099" target="cw">AS57099</a></td>
-						<td>10&nbsp;Gb</td>
-						<td>91.217.231.28</td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
+				<tr><th>Member</th><th>AS</th><th>IPv4</th><th>IPv6</th></tr>
+				<tr><td>IXLeeds</td><td>51526</td><td>91.217.231.1</td><td>2001:7f8:67::c946:1</td></tr>
+				<tr><td>AQL</td><td>33920</td><td>91.217.231.10</td><td>2001:7f8:67::8480:1</td></tr>
+				<tr><td>Exa Networks</td><td>30740</td><td>91.217.231.12</td><td>2001:7f8:67::7814:1</td></tr>
+				<tr><td>York Data Services</td><td>43013</td><td>91.217.231.13</td><td>2001:7f8:67::a805:1</td></tr>
+				<tr><td>Fluidata</td><td>39545</td><td>91.217.231.16</td><td>2001:7f8:67::9a79:1</td></tr>
+				<tr><td>Vaioni</td><td>35575</td><td>91.217.231.18</td><td>2001:7f8:67::8af7:1</td></tr>
+				<tr><td>Ask4</td><td>41230</td><td>91.217.231.19</td><td>2001:7f8:67::a10e:1</td></tr>
+				<tr><td>Bytemark</td><td>35425</td><td>91.217.231.20</td><td>2001:7f8:67::8a61:1</td></tr>
+				<tr><td>Netserv UK</td><td>8613</td><td>91.217.231.21</td><td>2001:7f8:67::21a5:1</td></tr>
+				<tr><td>Metronet</td><td>42973</td><td>91.217.231.22</td><td>2001:7f8:67::a7dd:1</td></tr>
+				<tr><td>Akamai</td><td>20940</td><td>91.217.231.24</td><td>2001:7f8:67::51cc:1</td></tr>
+				<tr><td>Internet Factory</td><td>44504</td><td>91.217.231.25</td><td>2001:7f8:67::add8:1</td></tr>
+				<tr><td>IX Reach</td><td>43531</td><td>91.217.231.23</td><td>2001:7f8:67::aa0b:1</td></tr>
+				<tr><td>Webfusion</td><td>20738</td><td>91.217.231.26</td><td>2001:7f8:67::5102:1</td></tr>
+				<tr><td>Allegro</td><td>12536</td><td>91.217.231.27</td><td>2001:7f8:67::30f8:1</td></tr>
+				<tr><td>Boundless</td><td>57099</td><td>91.217.231.28</td><td>2001:7f8:67::df0b:1</td></tr>
+				<tr><td>Merula</td><td>16353</td><td>91.217.231.29</td><td>2001:7f8:67::3fe1:1</td></tr>
+				<tr><td>Vispa</td><td>29129</td><td>91.217.231.30</td><td>2001:7f8:67::71c9:1</td></tr>
+				<tr><td>flexOptix</td><td>199121</td><td>91.217.231.31</td><td>2001:7f8:67:0:3:9d1:1</td></tr>
+				<tr><td>Keycom</td><td>25178</td><td>91.217.231.32</td><td>2001:7f8:67::625a:1</td></tr>
+				<tr><td>Connexin</td><td>199775</td><td>91.217.231.33</td><td>2001:7f8:67:0:3:c5f:1</td></tr>
+				<tr><td>PCH</td><td>42</td><td>91.217.231.35</td><td>2001:7f8:67::2a:1</td></tr>
+				<tr><td>PCH</td><td>3856</td><td>91.217.231.36</td><td>2001:7f8:67::f10:1</td></tr>
+				<tr><td>VGRS</td><td>26415</td><td>91.217.231.37</td><td>2001:7f8:67::672f:1</td></tr>
+				<tr><td>Razorblue</td><td>15692</td><td>91.217.231.38</td><td>2001:7f8:67::3d4c:1</td></tr>
+				<tr><td>Vodat</td><td>50023</td><td>91.217.231.39</td><td>2001:7f8:67::c367:1</td></tr>
                 </table>
-            </div>
-            <div class="ipv6">
-                <p class="ipv6-title">Internet protocol version 6</p>
-                <div class="left-col">
-                    <p>MTU size</p>
-                    <span class="white-btn block-button">1500 bytes</span>
-                    <span class="white-btn block-button">9000 bytes</span>
-                </div>
-                <div class="right-col">
-                    <p>&nbsp;&nbsp;&nbsp;IP Address Block</p>
-                    <span class="white-btn block-button">2001:7f8:67::/64</span>
-                    <span class="white-btn block-button">2001:7f8:67:9::/64</span>
-                </div>
-            </div>
-            <div class="ipv4">
-                <p class="ipv4-title">Internet protocol version 4</p>
-                <div class="left-col">
-                    <p>MTU size</p>
-                    <span class="white-btn block-button">1500 bytes</span>
-                    <span class="white-btn block-button">9000 bytes</span>
-                </div>
-                <div class="right-col">
-                    <p>&nbsp;&nbsp;&nbsp;IP Address Block</p>
-                    <span class="white-btn block-button">91.217.231.0/24</span>
-                    <span class="white-btn block-button">91.234.18.0/24</span>
-                </div>
             </div>
 
             <h3 class="spacer">Want to be next? <a href="/content/join.html" alt="join our member pannel by clicking here">Join us</a>
