@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Join IXLeeds</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+<!--    <link rel="stylesheet" href="css/portfast.css"> -->
+  </head>
+  <body>
+  	<div class="container">
+	<main role="main">
+    <script src="js/portfast.js"></script>
+    <h1>IXLeeds joining form</h1>
+
+	<form class="form-horizontal" role="form" onsubmit="return sendSignup()">
+		<fieldset id="joiningform"></div>
+	</form>
+
+	<script>
+		buildFormGroups(document.getElementById("joiningform"), [
+			[
+				["legend", "Company information"],
+				["formField", "company.name", "Company name", "Example Ltd.", "text"],
+			],
+			[
+				["formField", "company.address1", "Address", "", "text"],
+				["formField", "company.address2", "", "", "text"],
+				["formField", "company.city", "City", "", "text"],
+				["formField", "company.county", "County / state", "", "text"],
+				["formField", "company.postcode", "Postcode", "", "text"],
+				["formField", "company.country", "Country", "", "text"],
+			],
+			[
+				["legend", "Physical connection information"],
+				["formSelect", "connection.site", "Connection site", [
+					["aql", "aql Leeds"]
+				]],
+				["formSelect", "connection.type", "Connection type", [
+					["10g_smf", "10G Single mode"],
+					["1g_copper", "1G Copper"]
+				]],
+				["formField", "connection.rack", "Rack location", "", "text"],
+			],
+			[
+				["legend", "Other technical information"],
+				["formField", "connection.peering_contact", "Peering email contact", "peering@example.net", "email"],
+				["formField", "connection.noc_contact", "NOC contact information", "noc@example.com / +44 123 456 7890", "text"],
+				["formField", "connection.dns_ptr", "DNS PTR", "et4-9.rt0.lds.example.net", "text"],
+				["formField", "connection.as_number", "AS number", "1234", "text"],
+				["formField", "connection.as_set", "AS macro", "AS-EXAMPLE", "text"],
+			],
+			[
+				["legend", "Administrative contact"],
+				["formField", "contact.admin.name", "Name", "", "text"],
+				["formField", "contact.admin.email", "Email", "", "email"],
+				["formField", "contact.admin.phone", "Phone", "", "text"],
+			],
+			[
+				["legend", "Technical contact"],
+				["formField", "contact.tech.name", "Name", "", "text"],
+				["formField", "contact.tech.email", "Email", "", "email"],
+				["formField", "contact.tech.phone", "Phone", "", "text"],
+			],
+			[
+				["legend", "Billing contact"],
+				["formField", "contact.billing.name", "Name", "", "text"],
+				["formField", "contact.billing.email", "Email", "", "email"],
+				["formField", "contact.billing.phone", "Phone", "", "text"],
+			],
+			[
+				["alert", "statusAlert"],
+				["submitButton", null, "Submit", "primary"]
+			]
+		]);
+
+		function signupSent () {
+			if (this.readyState == 4) {
+				if (this.status == 204) {
+					alertSet(document.getElementById("statusAlert"), 'success', "<b>Success</b>: Someone from IXLeeds will be in contact shortly.");
+					var button = document.getElementById('sendButton');
+					button.style.backgroundColor = '#0a0';
+					button.value = 'Message sent';
+				} else {
+					alertSet(document.getElementById("statusAlert"), 'danger', "<b>Error</b>: Please correct the highlighted fields");
+					var data = JSON.parse(this.responseText);
+					for (var i=0; i<data.fields.length; i++) {
+						document.getElementById(data.fields[i] + "-ct").className = "has-error";
+					}
+				}
+			}
+		};
+		
+		function getFields (prefix, fields) {
+			var data = {};
+			for (var i=0; i < fields.length; i++) {
+				data[fields[i]] = document.getElementById(prefix + "." + fields[i]).value;
+			}
+			return data;
+		}
+
+		function sendSignup () {
+			resetFail();
+			var r = new XMLHttpRequest();
+			r.onreadystatechange = signupSent;
+			r.open("POST", "signup.cgi", true);
+			r.send(JSON.stringify({
+				company: getFields("company", ["name", "address1", "address2", "city", "county", "postcode", "country"]),
+				connection: getFields("connection", ["site", "type", "rack", "peering_contact", "noc_contact", "dns_ptr", "as_number", "as_set"]),
+				contact: {
+					admin: getFields("contact.admin", ["name", "email", "phone"]),
+					tech: getFields("contact.tech", ["name", "email", "phone"]),
+					billing: getFields("contact.billing", ["name", "email", "phone"]),
+				}
+			}));
+			return false;
+		}
+
+		function doRound () {
+			$(".form-group").each(function (i) {
+				var z = $(this).find("input[type=text], input[type=password], input[type=number], input[type=email], select, textarea").filter(':visible');
+				z.first().addClass("first");
+				z.not(':first').removeClass("first");
+				z.not(':last').removeClass("last");
+				z.last().addClass("last");
+			});
+		}
+
+		var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+		var observer = new MutationObserver(function(mutations) {
+			doRound();
+			observer.takeRecords();
+		});
+		observer.observe(document.body, { childList: true, attributes: true, subtree: true })
+
+	</script>
+	</main>
+	</div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery-3.2.1.slim.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>
+
